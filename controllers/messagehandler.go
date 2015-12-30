@@ -30,8 +30,10 @@ type RanBaoBaoResponse struct {
 }
 
 func init() {
-	beego.SessionProvider = "mysql"
-	beego.SessionSavePath = "cloudbridge:Cbcnspsp06@tcp(115.29.164.59:3306)/storedb?param=value"
+	beego.SessionProvider = "mysql" //"memory"//
+	beego.SessionSavePath = "cloudbridge:Cbcnspsp06@tcp(115.29.164.59:3306)/storedb?charset=utf8"
+//	beego.SessionProvider = "file"
+//	beego.SessionSavePath = "./tmp"
 	beego.AppConfig.Int("captchaTimeout")
 	t,_ := beego.AppConfig.Int("captchaTimeout")
 	cacheTimeout = int64(t)
@@ -49,6 +51,14 @@ func (this * RanBaobaoController)Handler() {
 		this.GetCaptCha(&req,&rsp)
 	case CID_REGISTER_REQ:
 		this.Register(&req,&rsp)
+	case CID_LOGIN_REQ:
+		this.Login(&req,&rsp)
+	case CID_LOGOUT_REQ:
+		this.Logout(&req,&rsp)
+	case CID_USER_INFO_REQ:
+		this.GetUserInfo(&req,&rsp)
+	default:
+		rsp.RC = RC_ERR_1000
 	}
 	this.Data["json"] = rsp
 	this.ServeJson()

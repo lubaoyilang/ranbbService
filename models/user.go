@@ -1,5 +1,8 @@
 package models
-import "github.com/go-xweb/log"
+import (
+	"github.com/go-xweb/log"
+	"errors"
+)
 
 
 var (
@@ -9,7 +12,7 @@ var (
 type User struct {
 	UID string `xorm:"'UID' pk notnull unique varchar(35)"`
 	Mobile string `xorm:"'mobile' index notnull unique varchar(15)"`
-	PassWord string `xorm:"'password' not null -> varchar(35)" json:"-"`
+	PassWord string `xorm:"'password' notnull varchar(35)" json:"-"`
 	RealName string `xorm:"'realName' notnull varchar(35)"`
 	IdCard string `xorm:"'idCard' notnull unique index varchar(20)"`
 	AliPayAccount string `xorm:"'aliPayAccount' index notnull unique varchar(35)"`
@@ -22,6 +25,7 @@ type User struct {
 	CreateTime int64 `xorm:"'createTime' BigInt(10) default 0"`
 	UpdateTime int64 `xorm:"'updateTime' BigInt(10) default 0"`
 }
+
 
 func (user * User) TableName() string {
 	return _USER_TABLE_NAME
@@ -36,6 +40,22 @@ func AddUser(user * User) error {
 		log.Info(id,err.Error())
 		session.Rollback()
 		return err
+	}
+	return nil
+}
+
+func GetUser(user * User) error {
+	session := Engine.NewSession()
+	defer session.Close()
+	session.Begin()
+	has,err := session.Get(user)
+	if err != nil {
+		log.Info(err.Error())
+		return err
+	}
+	if !has {
+		log.Info("xorm can't find user ",user)
+		return errors.New("xorm can't find user")
 	}
 	return nil
 }

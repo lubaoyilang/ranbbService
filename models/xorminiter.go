@@ -15,7 +15,7 @@ var (
 
 func init() {
 	var err error
-	Engine,err = xorm.NewEngine("mysql","cloudbridge:Cbcnspsp06@tcp(115.29.164.59:3306)/storedb")
+	Engine,err = xorm.NewEngine("mysql","cloudbridge:Cbcnspsp06@tcp(115.29.164.59:3306)/storedb?charset=utf8")
 	if err != nil {
 		log.Info(err.Error())
 	}
@@ -40,7 +40,7 @@ func initSqlLog() {
 }
 
 func Sync2() {
-	err := Engine.Sync2(new(User))
+	err := Engine.Sync2(new(User),new(Session))
 	if err != nil {
 		log.Info(err.Error())
 	}

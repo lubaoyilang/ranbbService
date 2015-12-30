@@ -5,7 +5,10 @@ import (
 	"ranbbService/models"
 	"time"
 	"strings"
-	"github.com/henrylee2cn/pholcus/common/simplejson"
+	"github.com/bitly/go-simplejson"
+	"github.com/astaxie/beego"
+	"ranbbService/msg"
+	"fmt"
 )
 
 
@@ -39,6 +42,11 @@ type registerPl struct {
 	Captcha string
 }
 
+type loginPl struct  {
+	Mobile string
+	PassWord string
+}
+
 func (this * RanBaobaoController)GetCaptCha(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse) {
 	pl := captchaPl{}
 
@@ -56,16 +64,19 @@ func (this * RanBaobaoController)GetCaptCha(req * RanBaoBaoRequest,rsp * RanBaoB
 	}
 	captcha := util.BuildCaptcha()
 
-//	smsContent := fmt.Sprintf("您的验证码为%s \n",captcha)
-//	err = msg.SendSms(pl.Mobile,smsContent)
-//	if err != nil {
-//		log.Info("发送失败")
-//		rsp.RC = RC_ERR_1003
-//		return
-//	}
+	if(beego.RunMode != "dev"){
+		smsContent := fmt.Sprintf("您的验证码为%s \n",captcha)
+		err = msg.SendSms(pl.Mobile,smsContent)
+		if err != nil {
+			log.Info("发送失败")
+			rsp.RC = RC_ERR_1003
+			return
+		}
 
-	rsp.RC = RC_OK
+	}
 	rsp.PL = captcha
+	rsp.RC = RC_OK
+
 	servcache.Put(pl.Mobile,captcha,cacheTimeout)
 	return
 }
@@ -81,8 +92,8 @@ func (this * RanBaobaoController) Register(req * RanBaoBaoRequest,rsp * RanBaoBa
 	}
 
 	//验证码
-	captcha := servcache.Get(pl.Mobile).(string)
-	if !strings.EqualFold(captcha,pl.Captcha) {
+	captcha := servcache.Get(pl.Mobile)
+	if captcha == nil ||!strings.EqualFold(captcha.(string),pl.Captcha) {
 		log.Errorf("验证码错误:%s != %s",captcha,pl.Captcha)
 		rsp.RC = RC_ERR_1004
 		return
@@ -93,6 +104,7 @@ func (this * RanBaobaoController) Register(req * RanBaoBaoRequest,rsp * RanBaoBa
 		rsp.RC = RC_ERR_1005
 		return
 	}
+	//
 
 	user := &models.User{
 		UID:util.GetGuid(),
@@ -106,12 +118,90 @@ func (this * RanBaobaoController) Register(req * RanBaoBaoRequest,rsp * RanBaoBa
 		UpdateTime:time.Now().Unix()}
 	err = models.AddUser(user)
 	if err != nil {
-		log.Error("创建用户失败"+err.Error())
-		rsp.RC = RC_ERR_1006
+		errStr := err.Error()
+		if strings.Contains(errStr,"UQE_user_mobile") {
+			log.Info("手机号重复注册")
+			rsp.RC = RC_ERR_1007 // = 1007 //手机号已经被注册
+		}else if strings.Contains(errStr,"UQE_user_idCard") {
+			log.Info("身份证重复")
+			rsp.RC = RC_ERR_1008
+		}else if strings.Contains(errStr,"UQE_user_aliPayAccount"){
+			log.Info("支付宝账号重复")
+			rsp.RC = RC_ERR_1010
+		}else{
+			log.Error("创建用户失败"+err.Error())
+			rsp.RC = RC_ERR_1006
+		}
 		return
 	}
 	json := simplejson.New()
 	json.Set("UID",user.UID)
 	rsp.PL = json
+	return
+}
+
+func (this * RanBaobaoController) Login(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse){
+	pl := loginPl{}
+	err := util.ConvertToModel(&req.PL,&pl)
+	if err != nil {
+		log.Error(err.Error())
+		rsp.RC = RC_ERR_1001
+		return
+	}
+
+	user := models.User{Mobile:pl.Mobile}
+	err = models.GetUser(&user)
+	if err != nil {
+		rsp.RC = RC_ERR_1010
+		return
+	}
+
+	if !strings.EqualFold(util.StringMd5(pl.PassWord),user.PassWord) {
+		rsp.RC = RC_ERR_1011
+		return
+	}
+
+
+	SID := util.GetGuid()
+
+	session := this.GetSession(pl.Mobile)
+	if  session != nil {
+		this.DelSession(session)
+	}
+	this.SetSession(SID,pl.Mobile)
+	this.SetSession(pl.Mobile,SID)
+
+	json := simplejson.New()
+	json.Set("SID",SID)
+	rsp.PL = json
+	return
+}
+
+func (this * RanBaobaoController) Logout(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse){
+	this.DelSession(req.SID)
+	return
+}
+
+func (this * RanBaobaoController) GetUserInfo(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse){
+
+	if !this.validitySession(req.SID)  {
+		rsp.RC = RC_ERR_1012
+		return
+	}
+
+	m := this.GetSession(req.SID)
+
+	if m == nil {
+		rsp.RC = RC_ERR_1012
+		return
+	}
+
+	user := &models.User{Mobile:m.(string)}
+	err := models.GetUser(user)
+	if err != nil {
+		rsp.RC = RC_ERR_1010
+		return
+	}
+	rsp.PL = user
 	return
 }
