@@ -1,6 +1,5 @@
 package cmd
 import (
-	"github.com/go-xweb/log"
 	"fmt"
 	"strings"
 	"ranbbService/models"
@@ -8,6 +7,7 @@ import (
 	"github.com/astaxie/beego/httplib"
 	"github.com/astaxie/beego/cache"
 	"time"
+	"github.com/astaxie/beego"
 )
 
 const (
@@ -72,11 +72,11 @@ func textSms() {
 	req.Param("content","123456 【demon】")
 	rsp,err := req.SendOut()
 	if err != nil {
-		log.Info(err.Error())
+		beego.Informational(err.Error())
 	}
 	data,err := ioutil.ReadAll(rsp.Body)
 	if err != nil {
-		log.Info(err.Error())
+		beego.Informational(err.Error())
 	}
 	fmt.Println(string(data))
 }

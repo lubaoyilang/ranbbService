@@ -1,6 +1,5 @@
 package controllers
 import (
-	"github.com/go-xweb/log"
 	"ranbbService/util"
 	"ranbbService/models"
 	"time"
@@ -52,13 +51,13 @@ func (this * RanBaobaoController)GetCaptCha(req * RanBaoBaoRequest,rsp * RanBaoB
 
 	err := util.ConvertToModel(req.PL,&pl)
 	if err != nil {
-		log.Error(err.Error())
+		beego.Error(err.Error())
 		rsp.RC = RC_ERR_1001
 		return
 	}
 
 	if !util.IsPhone(pl.Mobile) {
-		log.Error("手机号码输入有误!")
+		beego.Error("手机号码输入有误!")
 		rsp.RC = RC_ERR_1002
 		return
 	}
@@ -68,7 +67,7 @@ func (this * RanBaobaoController)GetCaptCha(req * RanBaoBaoRequest,rsp * RanBaoB
 		smsContent := fmt.Sprintf("您的验证码为%s \n",captcha)
 		err = msg.SendSms(pl.Mobile,smsContent)
 		if err != nil {
-			log.Info("发送失败")
+			beego.Info("发送失败")
 			rsp.RC = RC_ERR_1003
 			return
 		}
@@ -86,7 +85,7 @@ func (this * RanBaobaoController) Register(req * RanBaoBaoRequest,rsp * RanBaoBa
 	pl := registerPl{}
 	err := util.ConvertToModel(&req.PL,&pl)
 	if err != nil {
-		log.Error(err.Error())
+		beego.Error(err.Error())
 		rsp.RC = RC_ERR_1001
 		return
 	}
@@ -94,13 +93,13 @@ func (this * RanBaobaoController) Register(req * RanBaoBaoRequest,rsp * RanBaoBa
 	//验证码
 	captcha := servcache.Get(pl.Mobile)
 	if captcha == nil ||!strings.EqualFold(captcha.(string),pl.Captcha) {
-		log.Errorf("验证码错误:%s != %s",captcha,pl.Captcha)
+		beego.Error("验证码错误:%s != %s",captcha,pl.Captcha)
 		rsp.RC = RC_ERR_1004
 		return
 	}
 
 	if !util.ValidityIdCard(pl.RealName,pl.IdCard) {
-		log.Errorf("错误的身份证:%s != %s",pl.RealName,pl.IdCard)
+		beego.Error("错误的身份证:%s != %s",pl.RealName,pl.IdCard)
 		rsp.RC = RC_ERR_1005
 		return
 	}
@@ -120,16 +119,16 @@ func (this * RanBaobaoController) Register(req * RanBaoBaoRequest,rsp * RanBaoBa
 	if err != nil {
 		errStr := err.Error()
 		if strings.Contains(errStr,"UQE_user_mobile") {
-			log.Info("手机号重复注册")
+			beego.Info("手机号重复注册")
 			rsp.RC = RC_ERR_1007 // = 1007 //手机号已经被注册
 		}else if strings.Contains(errStr,"UQE_user_idCard") {
-			log.Info("身份证重复")
+			beego.Info("身份证重复")
 			rsp.RC = RC_ERR_1008
 		}else if strings.Contains(errStr,"UQE_user_aliPayAccount"){
-			log.Info("支付宝账号重复")
+			beego.Info("支付宝账号重复")
 			rsp.RC = RC_ERR_1010
 		}else{
-			log.Error("创建用户失败"+err.Error())
+			beego.Error("创建用户失败"+err.Error())
 			rsp.RC = RC_ERR_1006
 		}
 		return
@@ -144,7 +143,7 @@ func (this * RanBaobaoController) Login(req * RanBaoBaoRequest,rsp * RanBaoBaoRe
 	pl := loginPl{}
 	err := util.ConvertToModel(&req.PL,&pl)
 	if err != nil {
-		log.Error(err.Error())
+		beego.Error(err.Error())
 		rsp.RC = RC_ERR_1001
 		return
 	}

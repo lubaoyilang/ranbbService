@@ -4,7 +4,7 @@ import (
 	"github.com/astaxie/beego/httplib"
 	"io/ioutil"
 	"encoding/json"
-	"github.com/go-xweb/log"
+	"github.com/astaxie/beego"
 )
 
 const (
@@ -42,23 +42,23 @@ func ValidityIdCard(realName,idCard string) bool {
 	req.Param("id",idCard)
 	rsp,err := req.SendOut()
 	if err != nil {
-		log.Error(err.Error())
+		beego.Error(err.Error())
 		return false
 	}
 	data,err := ioutil.ReadAll(rsp.Body)
 	if err != nil {
-		log.Error(err.Error())
+		beego.Error(err.Error())
 		return false
 	}
 	var result IdCardResult
 	err = json.Unmarshal(data,&result)
 	if err != nil {
-		log.Error(err.Error())
+		beego.Error(err.Error())
 		return false
 	}
 
 	if result.ErrorCode != 0 {
-		log.Info(result.Reason)
+		beego.Info(result.Reason)
 		return false
 	}
 

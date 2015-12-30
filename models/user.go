@@ -1,7 +1,7 @@
 package models
 import (
-	"github.com/go-xweb/log"
 	"errors"
+	"github.com/astaxie/beego"
 )
 
 
@@ -37,7 +37,7 @@ func AddUser(user * User) error {
 	session.Begin()
 	id,err := session.Insert(user)
 	if err != nil {
-		log.Info(id,err.Error())
+		beego.Info(id,err.Error())
 		session.Rollback()
 		return err
 	}
@@ -50,11 +50,11 @@ func GetUser(user * User) error {
 	session.Begin()
 	has,err := session.Get(user)
 	if err != nil {
-		log.Info(err.Error())
+		beego.Info(err.Error())
 		return err
 	}
 	if !has {
-		log.Info("xorm can't find user ",user)
+		beego.Info("xorm can't find user ",user)
 		return errors.New("xorm can't find user")
 	}
 	return nil
