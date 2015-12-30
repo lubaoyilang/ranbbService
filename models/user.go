@@ -23,12 +23,11 @@ type User struct {
 	UpdateTime int64 `xorm:"'updateTime' BigInt(10) default 0"`
 }
 
-
 func (user * User) TableName() string {
 	return _USER_TABLE_NAME
 }
 
-func AddUser(user * User) {
+func AddUser(user * User) error {
 	session := Engine.NewSession()
 	defer session.Close()
 	session.Begin()
@@ -36,6 +35,7 @@ func AddUser(user * User) {
 	if err != nil {
 		log.Info(id,err.Error())
 		session.Rollback()
+		return err
 	}
-	return
+	return nil
 }

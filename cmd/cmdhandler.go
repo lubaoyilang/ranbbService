@@ -6,15 +6,19 @@ import (
 	"ranbbService/models"
 	"io/ioutil"
 	"github.com/astaxie/beego/httplib"
+	"github.com/astaxie/beego/cache"
+	"time"
 )
 
-var (
-
+const (
 	_HELP = "help"
 	_SYNCDB = "SyncDB"
 	_PASSWD = "demon"
 	_SMS = "sms"
+	_CACHE = "cache"
 )
+
+var c cache.Cache
 
 func Run() {
 	go handleCmd()
@@ -31,6 +35,10 @@ func handleCmd() {
 			syncDB()
 		case _SMS:
 			textSms()
+		case _CACHE:
+			testCache()
+		default:
+			fmt.Println("unknown cmd")
 		}
 	}
 }
@@ -49,9 +57,9 @@ func syncDB() {
 	fmt.Print("输入管理员密码:")
 	fmt.Scanln(&passwd)
 	if strings.EqualFold(passwd,_PASSWD){
-		log.Info("sync database .....")
+		fmt.Println("sync database .....")
 		models.Sync2()
-		log.Info("sync databse success,please restart service!")
+		fmt.Println("sync databse success,please restart service!")
 	}else{
 		fmt.Print("密码错误")
 	}
@@ -70,5 +78,19 @@ func textSms() {
 	if err != nil {
 		log.Info(err.Error())
 	}
-	log.Info(string(data))
+	fmt.Println(string(data))
+}
+
+func testCache()  {
+	var input string
+	fmt.Print("input some thing want to cache")
+	fmt.Scanln(&input)
+	c,_ = cache.NewCache("memory",`{"interval":1}`)
+	c.Put("key",input,1);
+	time.Sleep(time.Millisecond * 500)
+	output := c.Get("key")
+	fmt.Println(output)
+	time.Sleep(time.Millisecond * 499)
+	output = c.Get("key")
+	fmt.Println(output)
 }

@@ -2,8 +2,15 @@ package controllers
 import (
 	"github.com/astaxie/beego"
 	"encoding/json"
+	_ "github.com/astaxie/beego/session/mysql"
+	"github.com/astaxie/beego/cache"
 )
 
+
+var (
+	servcache  cache.Cache
+	cacheTimeout int64
+)
 
 type RanBaobaoController struct {
 	beego.Controller
@@ -22,26 +29,42 @@ type RanBaoBaoResponse struct {
 	PL interface{}
 }
 
+func init() {
+	beego.SessionProvider = "mysql"
+	beego.SessionSavePath = "cloudbridge:Cbcnspsp06@tcp(115.29.164.59:3306)/storedb?param=value"
+	beego.AppConfig.Int("captchaTimeout")
+	t,_ := beego.AppConfig.Int("captchaTimeout")
+	cacheTimeout = int64(t)
+	servcache,_ = cache.NewCache("memory",`{"interval":1}`)
+}
+
 func (this * RanBaobaoController)Handler() {
+
 	var req RanBaoBaoRequest
-	this.BindJson(&req)
+	this.bindJson(&req)
 
 	rsp := RanBaoBaoResponse{CID:req.CID+1,RC:RC_OK}
-
 	switch req.CID {
 	case CID_CAPTCHA_REQ:
-		GetCaptCha(&req,&rsp)
+		this.GetCaptCha(&req,&rsp)
 	case CID_REGISTER_REQ:
-		Register(&req,&rsp)
+		this.Register(&req,&rsp)
 	}
 	this.Data["json"] = rsp
 	this.ServeJson()
 }
 
 
-func (this * RanBaobaoController) BindJson(v interface{}) {
+func (this * RanBaobaoController) bindJson(v interface{}) {
 	err := json.Unmarshal(this.Ctx.Input.RequestBody,v)
 	if err != nil {
 		panic(err.Error())
 	}
+}
+
+func (this * RanBaobaoController) validitySession(sid string) bool  {
+	if this.GetSession(sid) == nil {
+		return  false
+	}
+	return true
 }
