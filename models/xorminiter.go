@@ -2,7 +2,6 @@ package models
 import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
-	"github.com/go-xweb/log"
 	"github.com/astaxie/beego"
 	"os"
 )
@@ -17,7 +16,7 @@ func init() {
 	var err error
 	Engine,err = xorm.NewEngine("mysql","cloudbridge:Cbcnspsp06@tcp(115.29.164.59:3306)/storedb?charset=utf8")
 	if err != nil {
-		log.Info(err.Error())
+		beego.Info(err.Error())
 	}
 
 	if(beego.RunMode == "dev"){
@@ -42,6 +41,6 @@ func initSqlLog() {
 func Sync2() {
 	err := Engine.Sync2(new(User),new(Session),new(Goods))
 	if err != nil {
-		log.Info(err.Error())
+		beego.Info(err.Error())
 	}
 }

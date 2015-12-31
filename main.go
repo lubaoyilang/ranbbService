@@ -7,17 +7,20 @@ import (
 )
 
 func init() {
-
+	beego.SetLogger("file", `{"filename":"logs/daily.log"}`)
 }
 
 func main() {
 
 	if beego.RunMode == "dev" {
-		beego.DirectoryIndex = true
-		beego.SessionOn = true
-		beego.SessionCookieLifeTime = 999999
-		beego.StaticDir["/ranbaobao/views"] = "views"
+
+	}else{
+		beego.BeeLogger.DelLogger("console")
 	}
+	beego.DirectoryIndex = true
+	beego.SessionOn = true
+	beego.SessionCookieLifeTime = 999999
+	beego.StaticDir["/ranbaobao/views"] = "views"
 	cmd.Run()
 	beego.Run()
 }
