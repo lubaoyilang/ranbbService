@@ -1,4 +1,5 @@
 package models
+import "errors"
 
 /**
  			  "GoodsId":"45514",
@@ -21,7 +22,7 @@ type Goods struct {
 	GoodsId int `xorm:"'goodId' pk int(11) unique autoincr "`
 	ShopId int `xorm:"shopId index int(11) notnull"`
 	ShopName string `xorm:"shopName varcha(32)"`
-	State int `xorm:"'state' tinyint(1)  default 0"`
+	State int `xorm:"'state' tinyint(1)  default 1"` //0 : 下架 1:正常
 	Price int64 `xorm:"price "`
 	RequireLevel int `xorm:"requireLevel tinyint(2) "`
 	ShopRequire string `xorm:"shopRequire blob"`
@@ -34,7 +35,7 @@ type Goods struct {
 	Memo string `xorm:"memo blob"`
 }
 
-func GetShopGoodsByPage(page,size ,shopId int ) ( *[]Goods ,int, error) {
+func GetGoodsOfShopByPage(page,size ,shopId int ) ( *[]Goods ,int, error) {
 	goods := make([]Goods, 0)
 	if page <= 0{
 		page = 0
@@ -42,8 +43,49 @@ func GetShopGoodsByPage(page,size ,shopId int ) ( *[]Goods ,int, error) {
 		page -= 1
 	}
 
+	if size <= 0 {
+		 size = 20
+	}
+
 	page = page*size
 
-	err := Engine.Table(new(Goods)).Where("shopId = ?",shopId).Limit(size,page).Find(&goods)
+	err := Engine.Table(new(Goods)).Where("shopId = ?",shopId).OrderBy("createTime").Limit(size,page).Find(&goods)
 	return &goods,len(goods),err
+}
+
+func GetGoods(goodsId int) (* Goods,error) {
+	goods := Goods{GoodsId:goodsId}
+	has,err := Engine.Get(&goods)
+	if err != nil || !has{
+		return nil,errors.New("can not find this goods")
+	}
+	return &goods,nil
+}
+
+func AddGoods(goods * Goods) error {
+	sess := Engine.NewSession()
+	defer sess.Close()
+	sess.Begin()
+	num,err := sess.InsertOne(goods)
+	if err != nil {
+		sess.Rollback()
+		return err
+	}
+	if num <= 0 {
+		return errors.New("添加失败")
+	}
+	return nil
+}
+
+func SubOneGoods(goods * Goods) error {
+	sess := Engine.NewSession()
+	defer sess.Close()
+	sess.Begin()
+	goods.Quantity -= 1
+	_,err := sess.Where("goodId = ?",goods.GoodsId).Update(goods)
+	if err != nil {
+		sess.Rollback()
+		return err
+	}
+	return nil
 }

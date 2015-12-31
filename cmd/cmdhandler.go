@@ -25,8 +25,8 @@ func Run() {
 }
 
 func handleCmd() {
-	var cmd string
 	for {
+		var cmd string
 		fmt.Scanln(&cmd)
 		switch cmd {
 		case _HELP,"?" :
@@ -38,7 +38,7 @@ func handleCmd() {
 		case _CACHE:
 			testCache()
 		default:
-			fmt.Println("unknown cmd")
+			printUseage()
 		}
 	}
 }

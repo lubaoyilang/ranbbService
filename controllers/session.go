@@ -163,12 +163,12 @@ func (this * RanBaobaoController) Login(req * RanBaoBaoRequest,rsp * RanBaoBaoRe
 
 	SID := util.GetGuid()
 
-	session := this.GetSession(pl.Mobile)
+	session := this.GetSession(user.UID)
 	if  session != nil {
 		this.DelSession(session)
 	}
-	this.SetSession(SID,pl.Mobile)
-	this.SetSession(pl.Mobile,SID)
+	this.SetSession(SID,user.UID)
+	this.SetSession(user.UID,SID)
 
 	json := simplejson.New()
 	json.Set("SID",SID)
@@ -177,6 +177,7 @@ func (this * RanBaobaoController) Login(req * RanBaoBaoRequest,rsp * RanBaoBaoRe
 }
 
 func (this * RanBaobaoController) Logout(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse){
+	this.DelSession(this.GetSession(req.SID))
 	this.DelSession(req.SID)
 	return
 }
@@ -188,14 +189,14 @@ func (this * RanBaobaoController) GetUserInfo(req * RanBaoBaoRequest,rsp * RanBa
 		return
 	}
 
-	m := this.GetSession(req.SID)
+	uid := this.GetSession(req.SID)
 
-	if m == nil {
+	if uid == nil {
 		rsp.RC = RC_ERR_1012
 		return
 	}
 
-	user := &models.User{Mobile:m.(string)}
+	user := &models.User{UID:uid.(string)}
 	err := models.GetUser(user)
 	if err != nil {
 		rsp.RC = RC_ERR_1010

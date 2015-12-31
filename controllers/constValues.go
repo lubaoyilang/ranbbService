@@ -6,8 +6,8 @@ const (
 	CID_LOGIN_REQ = 91021
 	CID_LOGOUT_REQ = 91031
 	CID_USER_INFO_REQ = 91041
-
 	CID_GET_GOODS_REQ = 91101
+	CID_ACCEPT_GOODS_REQ = 91111
 )
 
 const (
@@ -28,5 +28,10 @@ const (
 	RC_ERR_1012 = 1012 //未登录
 	RC_ERR_1013 = 1013 //登录失败
 	RC_ERR_1014 = 1014 //获取商品列表失败
+	RC_ERR_1015 = 1015 //商品不存在
+	RC_ERR_1016 = 1016 //商品已下架
+	RC_ERR_1017 = 1017 //购买失败
+	RC_ERR_1018 = 1018 //库存不足
+	RC_ERR_1019 = 1019 //超过购买限额
 )
 

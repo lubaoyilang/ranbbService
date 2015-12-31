@@ -34,12 +34,12 @@ func initSqlLog() {
 		println(err.Error())
 		return
 	}
-	defer f.Close()
-	Engine.Logger = xorm.NewSimpleLogger(os.Stdout)
+//	defer f.Close()
+	Engine.Logger = xorm.NewSimpleLogger(f)
 }
 
 func Sync2() {
-	err := Engine.Sync2(new(User),new(Session),new(Goods))
+	err := Engine.Sync2(new(User),new(Shop),new(WalletLog),new(Session),new(Goods),new(Orders),new(TaobaoAccount))
 	if err != nil {
 		beego.Info(err.Error())
 	}

@@ -26,14 +26,12 @@ type RanBaoBaoRequest struct {
 type RanBaoBaoResponse struct {
 	CID int
 	RC int
-	PL interface{}
+	PL interface{} `json:",omitempty"`
 }
 
 func init() {
 	beego.SessionProvider = "mysql" //"memory"//
 	beego.SessionSavePath = "cloudbridge:Cbcnspsp06@tcp(115.29.164.59:3306)/storedb?charset=utf8"
-//	beego.SessionProvider = "file"
-//	beego.SessionSavePath = "./tmp"
 	beego.AppConfig.Int("captchaTimeout")
 	t,_ := beego.AppConfig.Int("captchaTimeout")
 	cacheTimeout = int64(t)
@@ -59,6 +57,8 @@ func (this * RanBaobaoController)Handler() {
 		this.GetUserInfo(&req,&rsp)
 	case CID_GET_GOODS_REQ:
 		this.GetGoodsByShop(&req,&rsp)
+	case CID_ACCEPT_GOODS_REQ:
+		this.AcceptTask(&req,&rsp)
 	default:
 		rsp.RC = RC_ERR_1000
 	}
@@ -75,8 +75,15 @@ func (this * RanBaobaoController) bindJson(v interface{}) {
 }
 
 func (this * RanBaobaoController) validitySession(sid string) bool  {
-	if this.GetSession(sid) == nil {
+	m := this.GetSession(sid)
+	if m == nil {
 		return  false
 	}
+//	mobile := m.(string)
+//	user := models.User{Mobile:mobile}
+//	err := models.GetUser(&user)
+//	if err != nil {
+//		return false
+//	}
 	return true
 }
