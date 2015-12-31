@@ -1,4 +1,5 @@
 package models
+import "github.com/astaxie/beego"
 
 
 /**
@@ -48,9 +49,10 @@ func AddOrderAndSubGoods(order * Orders,goods *Goods) error {
 		sess.Rollback()
 		return err
 	}
-	goods.Quantity -= 1
-	_,err = sess.Where("goodId = ?",goods.GoodsId).Update(goods)
+	_,err =sess.Exec(`update goods set quantity = ? where goodId = ?`,goods.Quantity-1,goods.GoodsId)
+
 	if err != nil {
+		beego.Error(err.Error())
 		sess.Rollback()
 		return err
 	}

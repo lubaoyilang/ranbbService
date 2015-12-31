@@ -167,6 +167,7 @@ func (this * RanBaobaoController) Login(req * RanBaoBaoRequest,rsp * RanBaoBaoRe
 	if  session != nil {
 		this.DelSession(session)
 	}
+
 	this.SetSession(SID,user.UID)
 	this.SetSession(user.UID,SID)
 

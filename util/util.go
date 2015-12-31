@@ -8,6 +8,7 @@ import (
 	"encoding/base64"
 	"crypto/rand"
 	"encoding/json"
+	"errors"
 )
 
 
@@ -32,6 +33,11 @@ func GetGuid() string {
 }
 
 func ConvertToModel(src interface{},dst interface{}) (err error) {
+	if src == nil || dst == nil {
+		err = errors.New("参数错误")
+		return
+	}
+
 	data,err := json.Marshal(src)
 	if err != nil {
 		return

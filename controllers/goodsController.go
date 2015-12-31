@@ -24,6 +24,16 @@ type AcceptReq struct {
 	Count int
 }
 
+type commitReq struct {
+	OrderId int
+	TaoBaoAccount string
+}
+type orderListReq struct {
+	State int
+	Page int
+	Size int
+}
+
 func (this * RanBaobaoController) GetGoodsByShop(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse)  {
 	if !this.validitySession(req.SID) {
 		rsp.RC = RC_ERR_1012
@@ -105,4 +115,117 @@ func (this * RanBaobaoController) AcceptTask(req * RanBaoBaoRequest,rsp * RanBao
 	}
 
 	rsp.PL = order
+}
+
+func (this * RanBaobaoController) CommitOrder(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse){
+	if !this.validitySession(req.SID) {
+		rsp.RC = RC_ERR_1012
+		return
+	}
+	var pl commitReq
+	err := util.ConvertToModel(&req.PL,&pl)
+	if err != nil {
+		rsp.RC = RC_ERR_1001
+		return
+	}
+
+	if len(pl.TaoBaoAccount) < 0 {
+		rsp.RC = RC_ERR_1001
+		return
+	}
+
+	order,err := models.GetOrderById(pl.OrderId,this.GetSession(req.SID).(string))
+	if err != nil {
+		rsp.RC = RC_ERR_1020
+		return
+	}
+	if order.State != 0 {
+		rsp.RC = RC_ERR_1021
+		return
+	}
+
+	err = models.SetOrderState(1,order.OrderId,pl.TaoBaoAccount)
+	if err != nil {
+		rsp.RC = RC_ERR_1022
+		return
+	}
+	return
+
+}
+
+func (this * RanBaobaoController) DeleteOrder(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse){
+	if !this.validitySession(req.SID) {
+		rsp.RC = RC_ERR_1012
+		return
+	}
+	var pl commitReq
+	err := util.ConvertToModel(&req.PL,&pl)
+	if err != nil {
+		rsp.RC = RC_ERR_1001
+		return
+	}
+
+	order,err := models.GetOrderById(pl.OrderId,this.GetSession(req.SID).(string))
+	if err != nil {
+		rsp.RC = RC_ERR_1020
+		return
+	}
+	if order.State != 0 && order.State != 2 {
+		rsp.RC = RC_ERR_1023
+		return
+	}
+
+	err = models.CustomDeleteOrder(order.OrderId)
+	if err != nil {
+		rsp.RC = RC_ERR_1024
+		return
+	}
+	return
+}
+
+func (this * RanBaobaoController) GetOrderInfo(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse){
+	if !this.validitySession(req.SID) {
+		rsp.RC = RC_ERR_1012
+		return
+	}
+	var pl commitReq
+	err := util.ConvertToModel(&req.PL,&pl)
+	if err != nil {
+		rsp.RC = RC_ERR_1001
+		return
+	}
+
+	order,err := models.GetOrderById(pl.OrderId,this.GetSession(req.SID).(string))
+	if err != nil {
+		rsp.RC = RC_ERR_1020
+		return
+	}
+	rsp.PL = order
+	return
+}
+
+func (this * RanBaobaoController) GetOrderList(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse){
+	if !this.validitySession(req.SID) {
+		rsp.RC = RC_ERR_1012
+		return
+	}
+	
+	var pl orderListReq
+	err := util.ConvertToModel(&req.PL,&pl)
+	if err != nil {
+		rsp.RC = RC_ERR_1001
+		return
+	}
+
+	orders,count,err := models.GetOrdersByState(pl.State,pl.Page,pl.Size,this.GetSession(req.SID).(string))
+	if err != nil {
+		rsp.RC = RC_ERR_1025
+		return
+	}
+
+	js := simplejson.New()
+	js.Set("Count",count)
+	js.Set("Data",orders)
+	rsp.PL = js
+	return
 }
