@@ -1,5 +1,8 @@
 package models
-import "github.com/astaxie/beego"
+import (
+	"github.com/astaxie/beego"
+	"errors"
+)
 
 
 /**
@@ -20,7 +23,7 @@ Quantity	int	购买数量,默认为1
 Memo	String	描述
  */
 type Orders struct {
-	TaskId int `xorm:"taskId pk int(11) unique autoincr "`
+	OrderId int `xorm:"orderId pk int(11) unique autoincr "`
 	GoodsId int `xorm:"goodId index int(11) notnull"`
 	ShopId int	`xorm:"shopId index int(11) notnull"`
 	UID string  `xorm:"'UID' index notnull varchar(35)"`
@@ -38,6 +41,17 @@ type Orders struct {
 	Memo string `xorm:"memo blob"`
 }
 
+
+func GetOrderById(orderId int,UID string) (* Orders,error){
+	sess := Engine.NewSession()
+	defer sess.Close()
+	order :=  &Orders{}
+	has,err := sess.Where("orderId = ? AND UID = ?",orderId,UID).Get(order)
+	if err != nil || !has{
+		return nil,errors.New("can not find order by orderid Uid")
+	}
+	return order,nil
+}
 
 func AddOrderAndSubGoods(order * Orders,goods *Goods) error {
 	sess := Engine.NewSession()
@@ -57,4 +71,52 @@ func AddOrderAndSubGoods(order * Orders,goods *Goods) error {
 		return err
 	}
 	return sess.Commit()
+}
+
+func SetOrderState(state,orderId int,taoBaoAccount string) error {
+	sess := Engine.NewSession()
+	defer sess.Close()
+	sess.Begin()
+	_,err :=sess.Exec(`update orders set state = ? ,taoBaoAccount = ?where orderId = ?`,state,taoBaoAccount,orderId)
+	if err != nil {
+		sess.Rollback()
+		return err
+	}
+	return sess.Commit()
+}
+
+func CustomDeleteOrder (orderId int)error {
+	sess := Engine.NewSession()
+	defer sess.Close()
+	sess.Begin()
+	_,err := sess.Exec(`delete from orders where orderId = ?`,orderId)
+	if err != nil {
+		sess.Rollback()
+		return err
+	}
+	return sess.Commit()
+}
+
+func GetOrdersByState(state,page,size int,UID string) ([]Orders,int,error){
+	sess := Engine.NewSession()
+	defer sess.Close()
+	orders := make([]Orders,0)
+
+	if page <= 0{
+		page = 0
+	}else {
+		page -= 1
+	}
+
+	if size <= 0 {
+		size = 20
+	}
+
+	page = page*size
+
+	err := sess.Where("state = ? AND UID = ?",state,UID).OrderBy("updateTime").Limit(size,page).Find(&orders)
+	if err != nil {
+		return nil,0,err
+	}
+	return orders,len(orders),nil
 }
