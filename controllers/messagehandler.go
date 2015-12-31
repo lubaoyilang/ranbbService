@@ -57,6 +57,8 @@ func (this * RanBaobaoController)Handler() {
 		this.Logout(&req,&rsp)
 	case CID_USER_INFO_REQ:
 		this.GetUserInfo(&req,&rsp)
+	case CID_GET_GOODS_REQ:
+		this.GetGoodsByShop(&req,&rsp)
 	default:
 		rsp.RC = RC_ERR_1000
 	}

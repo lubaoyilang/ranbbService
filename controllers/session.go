@@ -1,6 +1,5 @@
 package controllers
 import (
-	"github.com/go-xweb/log"
 	"ranbbService/util"
 	"ranbbService/models"
 	"time"
@@ -120,16 +119,16 @@ func (this * RanBaobaoController) Register(req * RanBaoBaoRequest,rsp * RanBaoBa
 	if err != nil {
 		errStr := err.Error()
 		if strings.Contains(errStr,"UQE_user_mobile") {
-			log.Info("手机号重复注册")
+			beego.Info("手机号重复注册")
 			rsp.RC = RC_ERR_1007 // = 1007 //手机号已经被注册
 		}else if strings.Contains(errStr,"UQE_user_idCard") {
-			log.Info("身份证重复")
+			beego.Info("身份证重复")
 			rsp.RC = RC_ERR_1008
 		}else if strings.Contains(errStr,"UQE_user_aliPayAccount"){
-			log.Info("支付宝账号重复")
+			beego.Info("支付宝账号重复")
 			rsp.RC = RC_ERR_1010
 		}else{
-			log.Error("创建用户失败"+err.Error())
+			beego.Error("创建用户失败"+err.Error())
 			rsp.RC = RC_ERR_1006
 		}
 		return

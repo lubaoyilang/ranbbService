@@ -36,11 +36,11 @@ func initSqlLog() {
 		return
 	}
 	defer f.Close()
-	Engine.Logger = xorm.NewSimpleLogger(f)
+	Engine.Logger = xorm.NewSimpleLogger(os.Stdout)
 }
 
 func Sync2() {
-	err := Engine.Sync2(new(User),new(Session))
+	err := Engine.Sync2(new(User),new(Session),new(Goods))
 	if err != nil {
 		log.Info(err.Error())
 	}

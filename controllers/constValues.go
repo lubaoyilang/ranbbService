@@ -6,6 +6,8 @@ const (
 	CID_LOGIN_REQ = 91021
 	CID_LOGOUT_REQ = 91031
 	CID_USER_INFO_REQ = 91041
+
+	CID_GET_GOODS_REQ = 91101
 )
 
 const (
@@ -25,5 +27,6 @@ const (
 	RC_ERR_1011 = 1011 //密码错误
 	RC_ERR_1012 = 1012 //未登录
 	RC_ERR_1013 = 1013 //登录失败
+	RC_ERR_1014 = 1014 //获取商品列表失败
 )
 
