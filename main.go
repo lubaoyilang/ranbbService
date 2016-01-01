@@ -21,6 +21,7 @@ func main() {
 	beego.SessionOn = true
 	beego.SessionCookieLifeTime = 999999
 	beego.StaticDir["/ranbaobao/views"] = "views"
+	beego.StaticDir["/ranbaobao/docs"] = "views/apiviews"
 	cmd.Run()
 	beego.Run()
 }

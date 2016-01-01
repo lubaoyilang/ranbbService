@@ -56,7 +56,7 @@ func (this * RanBaobaoController)Handler() {
 	case CID_USER_INFO_REQ:
 		this.GetUserInfo(&req,&rsp)
 	case CID_GET_GOODS_REQ:
-		this.GetGoodsByShop(&req,&rsp)
+		this.GetGoodsList(&req,&rsp)
 	case CID_ACCEPT_GOODS_REQ:
 		this.AcceptTask(&req,&rsp)
 	case CID_COMMIT_ORDER_REQ:
@@ -75,6 +75,8 @@ func (this * RanBaobaoController)Handler() {
 		this.DeleteTaobaoAcc(&req,&rsp)
 	case CID_ADD_TBACC_REQ:
 		this.AddTaobaoAcc(&req,&rsp)
+	case CID_GET_WALLET_LOGS_REQ:
+		this.GetWalletLogs(&req,&rsp)
 	default:
 		rsp.RC = RC_ERR_1000
 	}

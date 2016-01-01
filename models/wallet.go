@@ -1,4 +1,5 @@
 package models
+import "fmt"
 
 /*
 id	int	主键
@@ -13,7 +14,33 @@ type WalletLog struct {
 	Wid int `xorm:"wid pk int(11) unique autoincr "`
 	UID string  `xorm:"'UID' index notnull varchar(35)"`
 	Amount int64 `xorm:"price"`
-	Type int `xorm:"'state' tinyint(1)`
+	Categroy int `xorm:"'categroy' tinyint(1)`
 	CreateTime int64 `xorm:"createTime default 0"`
 	Memo string `xorm:"memo blob"`
+}
+
+func GetWalletLogByMode(UID string ,page,size,mode int) ([]WalletLog,int,error){
+	var w string
+	logs := make([]WalletLog,0)
+	if mode == 0 || mode == 4{
+		w = fmt.Sprintf("UID = %s",UID)
+	}else {
+		w = fmt.Sprintf("UID = '%s' and categroy = %d",UID,mode)
+	}
+
+	if page <= 0{
+		page = 0
+	}else {
+		page -= 1
+	}
+
+	if size <= 0 {
+		size = 20
+	}
+
+	page = page*size
+	sess := Engine.NewSession()
+	defer sess.Close()
+	err := sess.Where(w).Limit(size,page).Find(&logs)
+	return logs,len(logs),err
 }

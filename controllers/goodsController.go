@@ -60,6 +60,32 @@ func (this * RanBaobaoController) GetGoodsByShop(req * RanBaoBaoRequest,rsp * Ra
 	rsp.PL = json
 }
 
+func (this * RanBaobaoController) GetGoodsList(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse){
+	if !this.validitySession(req.SID) {
+		rsp.RC = RC_ERR_1012
+		return
+	}
+
+	var pl goodsReq
+	err := util.ConvertToModel(&req.PL,&pl)
+	if err != nil {
+		beego.Error(err.Error())
+		rsp.RC = RC_ERR_1001
+		return
+	}
+
+	goods,count ,err := models.GetGoodsOfShopByPage(pl.Page,pl.Size,pl.ShopId)
+	if err != nil {
+		rsp.RC = RC_ERR_1014 //获取列表失败
+		return
+	}
+
+	json := simplejson.New()
+	json.Set("Count",count)
+	json.Set("data",goods)
+	rsp.PL = json
+}
+
 func (this * RanBaobaoController) AcceptTask(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse){
 	if !this.validitySession(req.SID) {
 		rsp.RC = RC_ERR_1012

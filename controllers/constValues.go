@@ -19,6 +19,8 @@ const (
 	CID_UPDATE_TBACC_REQ = 91211
 	CID_DELETE_TBACC_REQ = 91221
 	CID_ADD_TBACC_REQ = 91231
+
+	CID_GET_WALLET_LOGS_REQ =  91301
 )
 
 const (
@@ -54,5 +56,6 @@ const (
 	RC_ERR_1027 = 1027 //更新淘宝账号失败
 	RC_ERR_1028 = 1028 //删除淘宝账号失败
 	RC_ERR_1029 = 1029 //添加淘宝账号失败
+	RC_ERR_1030 = 1030 //获取钱包历史失败
 )
 

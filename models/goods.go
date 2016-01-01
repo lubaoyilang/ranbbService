@@ -49,8 +49,14 @@ func GetGoodsOfShopByPage(page,size ,shopId int ) ( *[]Goods ,int, error) {
 
 	page = page*size
 
-	err := Engine.Table(new(Goods)).Where("shopId = ?",shopId).OrderBy("createTime").Limit(size,page).Find(&goods)
-	return &goods,len(goods),err
+	if shopId > 0 {
+		err := Engine.Table(new(Goods)).Where("shopId = ?",shopId).OrderBy("createTime").Limit(size,page).Find(&goods)
+		return &goods,len(goods),err
+	}else{
+		err := Engine.Table(new(Goods)).OrderBy("createTime").Limit(size,page).Find(&goods)
+		return &goods,len(goods),err
+	}
+
 }
 
 func GetGoods(goodsId int) (* Goods,error) {

@@ -36,12 +36,25 @@
 </head>
 <body>
 
-<div class="am-input-group">
-  <span class="am-input-group-label">    
-    <i class="am-icon-user"></i>    
-  </span>
-    <input type="text" class="am-form-field" placeholder="Username">
-</div>
+<
+<form action="/ranbb/upload" method="POST" role="form" class="am-form am-form-horizontal" enctype="multipart/form-data">
+    <!-- form 结合 grid 使用 -->
+    <div class="am-form-group">
+        <label for="" class="am-u-sm-2 am-form-label">电子邮件</label>
+        <div class="am-u-sm-10">
+            <input type="text" id="email" name="email" />
+        </div>
+        <div class="am-u-sm-10">
+            <input type="file" id="sql.log" name="file" />
+        </div>
+    </div>
+
+    <div class="am-form-group">
+        <div class="am-u-sm-10 am-u-sm-offset-2">
+            <button type="submit" class="am-btn am-btn-default">提交登入</button>
+        </div>
+    </div>
+</form>
 
 <!--[if lt IE 9]>
 <script src="http://libs.useso.com/js/jquery/1.11.1/jquery.min.js"></script>
