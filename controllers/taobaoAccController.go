@@ -4,6 +4,7 @@ import (
 	"github.com/bitly/go-simplejson"
 	"ranbbService/util"
 	"time"
+	"ranbbService/session"
 )
 
 
@@ -19,7 +20,7 @@ func (this * RanBaobaoController) GetTaobaoAccList(req * RanBaoBaoRequest,rsp * 
 		return
 	}
 
-	accs,count,err := models.GetTaobaoAccList(this.GetSession(req.SID).(string))
+	accs,count,err := models.GetTaobaoAccList(session.GetSessionByiD(req.SID))
 	if err != nil {
 		rsp.RC = RC_ERR_1026
 		return
@@ -105,7 +106,7 @@ func (this * RanBaobaoController) AddTaobaoAcc(req * RanBaoBaoRequest,rsp * RanB
 	}
 
 	acc := &models.TaobaoAccount{
-		UID:this.GetSession(req.SID).(string),
+		UID:session.GetSessionByiD(req.SID),
 		TaoBaoAccount:pl.TaoBaoAccount,
 		Memo:pl.Memo,
 		CreateTime:time.Now().Unix(),

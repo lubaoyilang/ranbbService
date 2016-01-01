@@ -17,9 +17,10 @@ func main() {
 	}else{
 		beego.BeeLogger.DelLogger("console")
 	}
+
 	beego.DirectoryIndex = true
-	beego.SessionOn = true
-	beego.SessionCookieLifeTime = 999999
+//	beego.SessionOn = true
+//	beego.SessionCookieLifeTime = 999999
 	beego.StaticDir["/ranbaobao/views"] = "views"
 	beego.StaticDir["/ranbaobao/docs"] = "views/apiviews"
 	cmd.Run()

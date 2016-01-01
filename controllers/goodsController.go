@@ -5,6 +5,7 @@ import (
 	"ranbbService/util"
 	"github.com/astaxie/beego"
 	"time"
+	"ranbbService/session"
 )
 
 type goodsReq struct {
@@ -119,7 +120,7 @@ func (this * RanBaobaoController) AcceptTask(req * RanBaoBaoRequest,rsp * RanBao
 	}
 
 	order := models.Orders{
-		UID:this.GetSession(req.SID).(string),
+		UID:session.GetSessionByiD(req.SID),
 		GoodsId:goods.GoodsId,
 		ShopId:goods.ShopId,
 		State:0,
@@ -160,7 +161,7 @@ func (this * RanBaobaoController) CommitOrder(req * RanBaoBaoRequest,rsp * RanBa
 		return
 	}
 
-	order,err := models.GetOrderById(pl.OrderId,this.GetSession(req.SID).(string))
+	order,err := models.GetOrderById(pl.OrderId,session.GetSessionByiD(req.SID))
 	if err != nil {
 		rsp.RC = RC_ERR_1020
 		return
@@ -191,7 +192,7 @@ func (this * RanBaobaoController) DeleteOrder(req * RanBaoBaoRequest,rsp * RanBa
 		return
 	}
 
-	order,err := models.GetOrderById(pl.OrderId,this.GetSession(req.SID).(string))
+	order,err := models.GetOrderById(pl.OrderId,session.GetSessionByiD(req.SID))
 	if err != nil {
 		rsp.RC = RC_ERR_1020
 		return
@@ -221,7 +222,7 @@ func (this * RanBaobaoController) GetOrderInfo(req * RanBaoBaoRequest,rsp * RanB
 		return
 	}
 
-	order,err := models.GetOrderById(pl.OrderId,this.GetSession(req.SID).(string))
+	order,err := models.GetOrderById(pl.OrderId,session.GetSessionByiD(req.SID))
 	if err != nil {
 		rsp.RC = RC_ERR_1020
 		return
@@ -243,7 +244,7 @@ func (this * RanBaobaoController) GetOrderList(req * RanBaoBaoRequest,rsp * RanB
 		return
 	}
 
-	orders,count,err := models.GetOrdersByState(pl.State,pl.Page,pl.Size,this.GetSession(req.SID).(string))
+	orders,count,err := models.GetOrdersByState(pl.State,pl.Page,pl.Size,session.GetSessionByiD(req.SID))
 	if err != nil {
 		rsp.RC = RC_ERR_1025
 		return

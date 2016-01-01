@@ -4,6 +4,7 @@ import (
 	"ranbbService/models"
 	"github.com/bitly/go-simplejson"
 	"github.com/astaxie/beego"
+	"ranbbService/session"
 )
 
 
@@ -26,7 +27,7 @@ func (this * RanBaobaoController) GetWalletLogs(req * RanBaoBaoRequest,rsp * Ran
 		return
 	}
 
-	logs,count,err := models.GetWalletLogByMode(this.GetSession(req.SID).(string),pl.Page,pl.Size,pl.Mode)
+	logs,count,err := models.GetWalletLogByMode(session.GetSessionByiD(req.SID),pl.Page,pl.Size,pl.Mode)
 	if err != nil {
 		beego.Error(err.Error())
 		rsp.RC = RC_ERR_1030

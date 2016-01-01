@@ -29,17 +29,22 @@ func init() {
 }
 
 func initSqlLog() {
-	f, err := os.Create("sql.log")
-	if err != nil {
-		println(err.Error())
+	if beego.RunMode == "dev" {
+		Engine.Logger = xorm.NewSimpleLogger(os.Stdout)
 		return
+	}else{
+		f, err := os.Create("sql.log")
+		if err != nil {
+			println(err.Error())
+			return
+		}
+		//	defer f.Close()
+		Engine.Logger = xorm.NewSimpleLogger(f)
 	}
-//	defer f.Close()
-	Engine.Logger = xorm.NewSimpleLogger(f)
 }
 
 func Sync2() {
-	err := Engine.Sync2(new(User),new(Shop),new(WalletLog),new(Session),new(Goods),new(Orders),new(TaobaoAccount))
+	err := Engine.Sync2(new(User),new(Shop),new(WalletLog),new(UserToken),new(Goods),new(Orders),new(TaobaoAccount),new(Admin),new(Session))
 	if err != nil {
 		beego.Info(err.Error())
 	}

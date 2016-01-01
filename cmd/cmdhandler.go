@@ -16,6 +16,7 @@ const (
 	_PASSWD = "demon"
 	_SMS = "sms"
 	_CACHE = "cache"
+	_ADD_ADMIN = "addAdmin"
 )
 
 var c cache.Cache
@@ -37,6 +38,8 @@ func handleCmd() {
 			textSms()
 		case _CACHE:
 			testCache()
+		case _ADD_ADMIN:
+			addAdmin()
 		default:
 			printUseage()
 		}
@@ -93,4 +96,19 @@ func testCache()  {
 	time.Sleep(time.Millisecond * 499)
 	output = c.Get("key")
 	fmt.Println(output)
+}
+
+func addAdmin() {
+	var adminName string
+	var adminPass string
+	var myName string
+	fmt.Println("input admin mobile:")
+	fmt.Scanln(&adminName)
+	fmt.Println("input admin password")
+	fmt.Scanln(&adminPass)
+	fmt.Print(">")
+	fmt.Scanln(&myName)
+	if strings.EqualFold(myName,_PASSWD) {
+		models.AddAdmin(adminName,adminPass)
+	}
 }

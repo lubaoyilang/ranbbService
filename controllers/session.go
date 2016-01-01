@@ -8,6 +8,7 @@ import (
 	"github.com/astaxie/beego"
 	"ranbbService/msg"
 	"fmt"
+	"ranbbService/session"
 )
 
 
@@ -85,7 +86,7 @@ func (this * RanBaobaoController) Register(req * RanBaoBaoRequest,rsp * RanBaoBa
 	pl := registerPl{}
 	err := util.ConvertToModel(&req.PL,&pl)
 	if err != nil {
-		beego.Error(err.Error())
+		beego.Error("conver err",err.Error())
 		rsp.RC = RC_ERR_1001
 		return
 	}
@@ -161,15 +162,16 @@ func (this * RanBaobaoController) Login(req * RanBaoBaoRequest,rsp * RanBaoBaoRe
 	}
 
 
-	SID := util.GetGuid()
+	var SID string
 
-	session := this.GetSession(user.UID)
-	if  session != nil {
-		this.DelSession(session)
+	sess,ok := session.IsExist(user.UID)
+
+	if ok {
+		SID = sess.SessionKey
+	}else{
+		SID = util.GetGuid()
+		session.SetSession(SID,user.UID)
 	}
-
-	this.SetSession(SID,user.UID)
-	this.SetSession(user.UID,SID)
 
 	json := simplejson.New()
 	json.Set("SID",SID)
@@ -178,8 +180,7 @@ func (this * RanBaobaoController) Login(req * RanBaoBaoRequest,rsp * RanBaoBaoRe
 }
 
 func (this * RanBaobaoController) Logout(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse){
-	this.DelSession(this.GetSession(req.SID))
-	this.DelSession(req.SID)
+	session.DeleteBySid(req.SID)
 	return
 }
 
@@ -190,14 +191,8 @@ func (this * RanBaobaoController) GetUserInfo(req * RanBaoBaoRequest,rsp * RanBa
 		return
 	}
 
-	uid := this.GetSession(req.SID)
-
-	if uid == nil {
-		rsp.RC = RC_ERR_1012
-		return
-	}
-
-	user := &models.User{UID:uid.(string)}
+	uid := session.GetSessionByiD(req.SID)
+	user := &models.User{UID:uid}
 	err := models.GetUser(user)
 	if err != nil {
 		rsp.RC = RC_ERR_1010

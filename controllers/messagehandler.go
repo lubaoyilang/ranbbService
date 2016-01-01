@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	_ "github.com/astaxie/beego/session/mysql"
 	"github.com/astaxie/beego/cache"
+	"ranbbService/session"
 )
 
 
@@ -41,6 +42,7 @@ func init() {
 func (this * RanBaobaoController)Handler() {
 
 	var req RanBaoBaoRequest
+	beego.Debug(string(this.Ctx.Input.RequestBody))
 	this.bindJson(&req)
 
 	rsp := RanBaoBaoResponse{CID:req.CID+1,RC:RC_OK}
@@ -93,15 +95,11 @@ func (this * RanBaobaoController) bindJson(v interface{}) {
 }
 
 func (this * RanBaobaoController) validitySession(sid string) bool  {
-	m := this.GetSession(sid)
-	if m == nil {
-		return  false
+
+	content := session.GetSessionByiD(sid)
+	if len(content) <= 0 {
+			return false
 	}
-//	mobile := m.(string)
-//	user := models.User{Mobile:mobile}
-//	err := models.GetUser(&user)
-//	if err != nil {
-//		return false
-//	}
+
 	return true
 }
