@@ -74,7 +74,9 @@ func (this * RanBaobaoController)GetCaptCha(req * RanBaoBaoRequest,rsp * RanBaoB
 		}
 
 	}
-	rsp.PL = captcha
+	js := simplejson.New()
+	js.Set("Captcha",captcha)
+	rsp.PL = js
 	rsp.RC = RC_OK
 
 	servcache.Put(pl.Mobile,captcha,cacheTimeout)
