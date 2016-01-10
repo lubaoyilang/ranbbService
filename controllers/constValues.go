@@ -6,6 +6,7 @@ const (
 	CID_LOGIN_REQ = 91021
 	CID_LOGOUT_REQ = 91031
 	CID_USER_INFO_REQ = 91041
+	CID_FIND_PASSWD_REQ = 91051
 
 	CID_GET_GOODS_REQ = 91101
 	CID_ACCEPT_GOODS_REQ = 91111
@@ -57,5 +58,7 @@ const (
 	RC_ERR_1028 = 1028 //删除淘宝账号失败
 	RC_ERR_1029 = 1029 //添加淘宝账号失败
 	RC_ERR_1030 = 1030 //获取钱包历史失败
+	RC_ERR_1031 = 1031 //身份证号码不符
+	RC_ERR_1032 = 1032 //查找密码错误
 )
 

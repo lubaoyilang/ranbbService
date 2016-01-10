@@ -59,3 +59,17 @@ func GetUser(user * User) error {
 	}
 	return nil
 }
+
+func SetUserPasswd(user *User) error{
+	session := Engine.NewSession()
+	defer session.Close()
+	session.Begin()
+	_,err := session.Exec(`update user set password = ? where UID = ?`,user.PassWord,user.UID)
+	if err != nil {
+		beego.Debug("update ok",err.Error());
+		session.Rollback()
+		return err;
+	}
+	beego.Debug("update ok");
+	return session.Commit()
+}

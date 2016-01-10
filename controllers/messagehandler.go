@@ -57,6 +57,8 @@ func (this * RanBaobaoController)Handler() {
 		this.Logout(&req,&rsp)
 	case CID_USER_INFO_REQ:
 		this.GetUserInfo(&req,&rsp)
+	case CID_FIND_PASSWD_REQ:
+		this.FindPasswd(&req,&rsp)
 	case CID_GET_GOODS_REQ:
 		this.GetGoodsList(&req,&rsp)
 	case CID_ACCEPT_GOODS_REQ:

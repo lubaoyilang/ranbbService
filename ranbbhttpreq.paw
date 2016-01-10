@@ -5,7 +5,7 @@
     <databaseInfo>
         <version>134481920</version>
         <UUID>793E3FF1-807A-451A-8809-AA1EBAC2BCAF</UUID>
-        <nextObjectID>141</nextObjectID>
+        <nextObjectID>144</nextObjectID>
         <metadata>
             <plist version="1.0">
                 <dict>
@@ -127,7 +127,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">["{\\n  \\"CID\\": 91021,\\n  \\"PL\\": {\\n    \\"Mobile\\": \\"13585826146\\",\\n    \\"PassWord\\": \\"123456\\"\\n  }\\n}"]</attribute>
+        <attribute name="body" type="string">["{\\n  \\"CID\\": 91021,\\n  \\"PL\\": {\\n    \\"Mobile\\": \\"18601761051\\",\\n    \\"PassWord\\": \\"123456\\"\\n  }\\n}"]</attribute>
         <attribute name="order" type="int64">2</attribute>
         <attribute name="name" type="string">登陆</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z128"></relationship>
@@ -160,7 +160,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">["{\\n  \\"SID\\": \\"34ccd6829dce3192db75f72dafce23d8\\",\\n  \\"CID\\": 91111,\\n  \\"PL\\": {\\n    \\"GoodsId\\": 2,\\n    \\"Count\\": 1\\n  }\\n}"]</attribute>
+        <attribute name="body" type="string">["{\\n  \\"SID\\": \\"34ccd6829dce3192db75f72dafce23d8\\",\\n  \\"CID\\": 91111,\\n  \\"PL\\": {\\n    \\"GoodsId\\": 2,\\n    \\"Count\\": 1\\n  }\\n}c"]</attribute>
         <attribute name="order" type="int64">6</attribute>
         <attribute name="name" type="string">提交订单</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z128"></relationship>
@@ -209,7 +209,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">["{\\n  \\"SID\\": \\"34ccd6829dce3192db75f72dafce23d8\\",\\n  \\"CID\\": 91041\\n}"]</attribute>
+        <attribute name="body" type="string">["{\\n  \\"SID\\": \\"98106d3fa831682d11aaefd44cd2f131\\",\\n  \\"CID\\": 91041\\n}"]</attribute>
         <attribute name="order" type="int64">4</attribute>
         <attribute name="name" type="string">用户信息</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z128"></relationship>
@@ -351,7 +351,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">["{\\n  \\"PL\\": {\\n    \\"Mobile\\": \\"18601761051\\",\\n    \\"PassWord\\": \\"123456\\",\\n    \\"RealName\\": \\"王猛\\",\\n    \\"IdCard\\": \\"412723198906060833\\",\\n    \\"AliyPayId\\": \\"8986462467@qq.com\\",\\n    \\"Captcha\\": \\"88065\\",\\n    \\"AliyPayName\\": \\"demon\\"\\n  },\\n  \\"CID\\": 91011\\n}"]</attribute>
+        <attribute name="body" type="string">["{\\n  \\"PL\\": {\\n    \\"Mobile\\": \\"18601761051\\",\\n    \\"PassWord\\": \\"123456\\",\\n    \\"RealName\\": \\"王猛\\",\\n    \\"IdCard\\": \\"412723198906060833\\",\\n    \\"AliyPayId\\": \\"8986462467@qq.com\\",\\n    \\"Captcha\\": \\"654581\\",\\n    \\"AliyPayName\\": \\"demon\\"\\n  },\\n  \\"CID\\": 91011\\n}"]</attribute>
         <attribute name="order" type="int64">1</attribute>
         <attribute name="name" type="string">注册</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z128"></relationship>
@@ -448,7 +448,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">["{\\n  \\"SID\\": \\"bf829691dd56a788e711cc7522455e0b\\",\\n  \\"CID\\": 91031\\n}"]</attribute>
+        <attribute name="body" type="string">["{\\n  \\"SID\\": \\"3e311edab14ba669303f7a1061037224\\",\\n  \\"CID\\": 91031\\n}"]</attribute>
         <attribute name="order" type="int64">3</attribute>
         <attribute name="name" type="string">登出</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z128"></relationship>
@@ -536,11 +536,46 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">["{\\n  \\"SID\\": \\"34ccd6829dce3192db75f72dafce23d8\\",\\n  \\"CID\\": 91101,\\n  \\"PL\\": {\\n    \\"Page\\": 1,\\n    \\"Size\\": 2\\n  }\\n}"]</attribute>
+        <attribute name="body" type="string">["{\\n  \\"SID\\": \\"98106d3fa831682d11aaefd44cd2f131\\",\\n  \\"CID\\": 91101,\\n  \\"PL\\": {\\n    \\"Page\\": 1,\\n    \\"Size\\": 2\\n  }\\n}"]</attribute>
         <attribute name="order" type="int64">5</attribute>
         <attribute name="name" type="string">获取商品列表</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z128"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
         <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z140"></relationship>
+    </object>
+    <object type="LMREQUESTGROUP" id="z142">
+        <attribute name="uuid" type="string">FC17967B-C7CE-4FB2-852F-69D72A835249</attribute>
+        <attribute name="order" type="int64">1</attribute>
+        <attribute name="name" type="string">admin</attribute>
+        <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM" idrefs="z144"></relationship>
+        <relationship name="bodyparameters" type="0/0" destination="LMKEYVALUE"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE"></relationship>
+        <relationship name="urlparameters" type="0/0" destination="LMKEYVALUE"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z143">
+        <attribute name="value" type="string"></attribute>
+        <attribute name="order" type="int64">0</attribute>
+        <attribute name="name" type="string"></attribute>
+        <attribute name="enabled" type="bool">1</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z144"></relationship>
+    </object>
+    <object type="LMREQUEST" id="z144">
+        <attribute name="uuid" type="string">A292A507-37E4-4FCC-9C28-0FF765E2C207</attribute>
+        <attribute name="url" type="string">http://127.0.0.1:8080/ranbb/admin</attribute>
+        <attribute name="storecookies" type="bool">1</attribute>
+        <attribute name="sendcookies" type="bool">1</attribute>
+        <attribute name="redirectmethod" type="bool">0</attribute>
+        <attribute name="redirectauthorization" type="bool">0</attribute>
+        <attribute name="method" type="string">GET</attribute>
+        <attribute name="followredirects" type="bool">0</attribute>
+        <attribute name="order" type="int64">0</attribute>
+        <attribute name="name" type="string">My API</attribute>
+        <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z142"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z143"></relationship>
     </object>
 </database>

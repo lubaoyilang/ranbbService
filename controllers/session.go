@@ -100,6 +100,7 @@ func (this * RanBaobaoController) Register(req * RanBaoBaoRequest,rsp * RanBaoBa
 		rsp.RC = RC_ERR_1004
 		return
 	}
+	servcache.Delete(pl.Mobile)
 
 	if !util.ValidityIdCard(pl.RealName,pl.IdCard) {
 		beego.Error("错误的身份证:%s != %s",pl.RealName,pl.IdCard)
@@ -202,4 +203,61 @@ func (this * RanBaobaoController) GetUserInfo(req * RanBaoBaoRequest,rsp * RanBa
 	}
 	rsp.PL = user
 	return
+}
+
+func (this * RanBaobaoController)FindPasswd(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse) {
+	pl := registerPl{}
+	err := util.ConvertToModel(&req.PL,&pl)
+	if err != nil {
+		beego.Error("conver err",err.Error())
+		rsp.RC = RC_ERR_1001
+		return
+	}
+
+	//验证码
+	captcha := servcache.Get(pl.Mobile)
+	if captcha == nil ||!strings.EqualFold(captcha.(string),pl.Captcha) {
+		beego.Error("验证码错误:%s != %s",captcha,pl.Captcha)
+		rsp.RC = RC_ERR_1004
+		return
+	}
+	servcache.Delete(pl.Mobile);
+
+	if !util.ValidityIdCard(pl.RealName,pl.IdCard) {
+		beego.Error("错误的身份证:%s != %s",pl.RealName,pl.IdCard)
+		rsp.RC = RC_ERR_1005
+		return
+	}
+
+	user := models.User{Mobile:pl.Mobile}
+	err = models.GetUser(&user)
+	if err != nil {
+		rsp.RC = RC_ERR_1010
+		return
+	}
+	if !strings.EqualFold(pl.IdCard,user.IdCard) {
+		rsp.RC = RC_ERR_1031
+		return
+	}
+
+	newpswd := util.BuildCaptcha()
+	user.PassWord = util.StringMd5(newpswd)
+	err = models.SetUserPasswd(&user)
+	if err != nil {
+		beego.Error("设置密码错误")
+		rsp.RC = RC_ERR_1032
+		return
+	}
+	if(beego.RunMode != "dev"){
+		smsContent := fmt.Sprintf("您的新密码是 %s 请及时登陆并修改",newpswd)
+		err = msg.SendSms(pl.Mobile,smsContent)
+		if err != nil {
+			beego.Info("发送失败")
+			rsp.RC = RC_ERR_1003
+			return
+		}
+	}
+
+	beego.Debug("重置密码成功 -->",newpswd)
+	return;
 }
