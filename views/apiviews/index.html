@@ -312,7 +312,7 @@ footer { color: inherit; }
 </style>
 </head>
 <body class='typora-export' >
-<div  id='write' class = 'is-mac'><h1><a name='header-c1' class='md-header-anchor '></a>API</h1><div class='md-toc' mdtype='toc'><p class="md-toc-content"><span class="md-toc-item md-toc-h1" data-ref="c1"><a class="md-toc-inner" href="#header-c1">API</a></span><span class="md-toc-item md-toc-h2" data-ref="c17"><a class="md-toc-inner" href="#header-c17">获取验证码</a></span><span class="md-toc-item md-toc-h2" data-ref="c21"><a class="md-toc-inner" href="#header-c21">注册</a></span><span class="md-toc-item md-toc-h2" data-ref="c25"><a class="md-toc-inner" href="#header-c25">登陆</a></span><span class="md-toc-item md-toc-h2" data-ref="c29"><a class="md-toc-inner" href="#header-c29">登出</a></span><span class="md-toc-item md-toc-h2" data-ref="c33"><a class="md-toc-inner" href="#header-c33">查询用户信息</a></span><span class="md-toc-item md-toc-h2" data-ref="c41"><a class="md-toc-inner" href="#header-c41">获取商品列表</a></span><span class="md-toc-item md-toc-h2" data-ref="c45"><a class="md-toc-inner" href="#header-c45">购买商品</a></span><span class="md-toc-item md-toc-h2" data-ref="c49"><a class="md-toc-inner" href="#header-c49">提交审核订单</a></span><span class="md-toc-item md-toc-h2" data-ref="c53"><a class="md-toc-inner" href="#header-c53">获取订单信息</a></span><span class="md-toc-item md-toc-h2" data-ref="c57"><a class="md-toc-inner" href="#header-c57">获取订单列表</a></span><span class="md-toc-item md-toc-h2" data-ref="c61"><a class="md-toc-inner" href="#header-c61">删除订单</a></span><span class="md-toc-item md-toc-h2" data-ref="c67"><a class="md-toc-inner" href="#header-c67">获取淘宝账号列表</a></span><span class="md-toc-item md-toc-h2" data-ref="c71"><a class="md-toc-inner" href="#header-c71">更新淘宝账号</a></span><span class="md-toc-item md-toc-h2" data-ref="c75"><a class="md-toc-inner" href="#header-c75">删除淘宝账号</a></span><span class="md-toc-item md-toc-h2" data-ref="c79"><a class="md-toc-inner" href="#header-c79">添加淘宝账号</a></span><span class="md-toc-item md-toc-h2" data-ref="c83"><a class="md-toc-inner" href="#header-c83">获取钱包历史列表</a></span></p></div><h2><a name='header-c17' class='md-header-anchor '></a>获取验证码</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
+<div  id='write' class = 'is-mac'><h1><a name='header-c1' class='md-header-anchor '></a>API</h1><div class='md-toc' mdtype='toc'><p class="md-toc-content"><span class="md-toc-item md-toc-h1" data-ref="c1"><a class="md-toc-inner" href="#header-c1">API</a></span><span class="md-toc-item md-toc-h2" data-ref="c7"><a class="md-toc-inner" href="#header-c7">获取验证码</a></span><span class="md-toc-item md-toc-h2" data-ref="c9"><a class="md-toc-inner" href="#header-c9">注册</a></span><span class="md-toc-item md-toc-h2" data-ref="c11"><a class="md-toc-inner" href="#header-c11">登陆</a></span><span class="md-toc-item md-toc-h2" data-ref="c13"><a class="md-toc-inner" href="#header-c13">登出</a></span><span class="md-toc-item md-toc-h2" data-ref="c60"><a class="md-toc-inner" href="#header-c60">修改密码</a></span><span class="md-toc-item md-toc-h2" data-ref="c15"><a class="md-toc-inner" href="#header-c15">查询用户信息</a></span><span class="md-toc-item md-toc-h2" data-ref="c17"><a class="md-toc-inner" href="#header-c17">获取商品列表</a></span><span class="md-toc-item md-toc-h2" data-ref="c52"><a class="md-toc-inner" href="#header-c52">获取商品分类列表</a></span><span class="md-toc-item md-toc-h2" data-ref="c19"><a class="md-toc-inner" href="#header-c19">购买商品</a></span><span class="md-toc-item md-toc-h2" data-ref="c21"><a class="md-toc-inner" href="#header-c21">提交审核订单</a></span><span class="md-toc-item md-toc-h2" data-ref="c23"><a class="md-toc-inner" href="#header-c23">获取订单信息</a></span><span class="md-toc-item md-toc-h2" data-ref="c25"><a class="md-toc-inner" href="#header-c25">获取订单列表</a></span><span class="md-toc-item md-toc-h2" data-ref="c29"><a class="md-toc-inner" href="#header-c29">删除订单</a></span><span class="md-toc-item md-toc-h2" data-ref="c31"><a class="md-toc-inner" href="#header-c31">获取淘宝账号列表</a></span><span class="md-toc-item md-toc-h2" data-ref="c33"><a class="md-toc-inner" href="#header-c33">更新淘宝账号</a></span><span class="md-toc-item md-toc-h2" data-ref="c35"><a class="md-toc-inner" href="#header-c35">删除淘宝账号</a></span><span class="md-toc-item md-toc-h2" data-ref="c37"><a class="md-toc-inner" href="#header-c37">添加淘宝账号</a></span><span class="md-toc-item md-toc-h2" data-ref="c39"><a class="md-toc-inner" href="#header-c39">获取钱包历史列表</a></span></p></div><h2><a name='header-c7' class='md-header-anchor '></a>获取验证码</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
   &quot;CID&quot;: 91001,
   &quot;PL&quot;: {
     &quot;mobile&quot;: &quot;18601761051&quot;
@@ -323,7 +323,7 @@ footer { color: inherit; }
   &quot;CID&quot;: 91002,
   &quot;RC&quot;: 0,
   &quot;PL&quot;: &quot;799523&quot;
-}</pre><h2><a name='header-c21' class='md-header-anchor '></a>注册</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
+}</pre><h2><a name='header-c9' class='md-header-anchor '></a>注册</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
   &quot;PL&quot;: {
     &quot;Mobile&quot;: &quot;18601761051&quot;,
     &quot;PassWord&quot;: &quot;123456&quot;,
@@ -340,7 +340,7 @@ footer { color: inherit; }
   &quot;CID&quot;: 91012,
   &quot;RC&quot;: 1004,
   &quot;PL&quot;: null
-}</pre><h2><a name='header-c25' class='md-header-anchor '></a>登陆</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
+}</pre><h2><a name='header-c11' class='md-header-anchor '></a>登陆</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
   &quot;CID&quot;: 91021,
   &quot;PL&quot;: {
     &quot;Mobile&quot;: &quot;18601761052&quot;,
@@ -354,7 +354,7 @@ footer { color: inherit; }
   &quot;PL&quot;: {
     &quot;SID&quot;: &quot;8287168ee1440159d4ac6ac30439b0cd&quot;
   }
-}</pre><h2><a name='header-c29' class='md-header-anchor '></a>登出</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
+}</pre><h2><a name='header-c13' class='md-header-anchor '></a>登出</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
   &quot;SID&quot;: &quot;ec8a98ebe2d7ad2345ba803b5a7badb9&quot;,
   &quot;CID&quot;: 91031
 }
@@ -362,7 +362,18 @@ footer { color: inherit; }
 {
   &quot;CID&quot;: 91032,
   &quot;RC&quot;: 0
-}</pre><h2><a name='header-c33' class='md-header-anchor '></a>查询用户信息</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
+}</pre><p></p><h2><a name='header-c60' class='md-header-anchor '></a>修改密码</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{  &quot;SID&quot;: &quot;0d034b86508356706d6f9e020e7180fe&quot;,
+  &quot;CID&quot;: 91061,
+  &quot;PL&quot;: {
+    &quot;OldPswd&quot;: &quot;123456&quot;,
+	&quot;NewPswd&quot;:&quot;123456&quot;
+  }
+}
+
+{
+  &quot;CID&quot;: 91062,
+  &quot;RC&quot;: 0
+}</pre><p></p><h2><a name='header-c15' class='md-header-anchor '></a>查询用户信息</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
   &quot;SID&quot;: &quot;40757c560f2506beb30be23401917555&quot;,
   &quot;CID&quot;: 91041
 }
@@ -385,7 +396,7 @@ footer { color: inherit; }
     &quot;CreateTime&quot;: 1451489343,
     &quot;UpdateTime&quot;: 1451489343
   }
-}</pre><h2><a name='header-c41' class='md-header-anchor '></a>获取商品列表</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
+}</pre><h2><a name='header-c17' class='md-header-anchor '></a>获取商品列表</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
   &quot;SID&quot;: &quot;8287168ee1440159d4ac6ac30439b0cd&quot;,
   &quot;CID&quot;: 91101,
   &quot;PL&quot;: {
@@ -435,7 +446,47 @@ footer { color: inherit; }
       }
     ]
   }
-}</pre><h2><a name='header-c45' class='md-header-anchor '></a>购买商品</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
+}</pre><p></p><h2><a name='header-c52' class='md-header-anchor '></a>获取商品分类列表</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
+  &quot;SID&quot;: &quot;29ee4eed583aafc07e8d0143a90bef48&quot;,
+  &quot;CID&quot;: 91161,
+  &quot;PL&quot;: {
+    &quot;GoodsId&quot;: 1
+  }
+}
+
+{
+  &quot;CID&quot;: 91162,
+  &quot;RC&quot;: 0,
+  &quot;PL&quot;: {
+    &quot;Count&quot;: 2,
+    &quot;Data&quot;: [
+      {
+        &quot;CategroyId&quot;: 1,
+        &quot;GoodsId&quot;: 1,
+        &quot;ShopId&quot;: 1,
+        &quot;Price&quot;: 100,
+        &quot;Name&quot;: &quot;大号&quot;,
+        &quot;EnableTime&quot;: 0,
+        &quot;TotalNum&quot;: 10,
+        &quot;OutNum&quot;: 5,
+        &quot;Memo&quot;: &quot;我了个去你好好刷&quot;,
+        &quot;LimitPurchaseQuantity&quot;: 1
+      },
+      {
+        &quot;CategroyId&quot;: 2,
+        &quot;GoodsId&quot;: 1,
+        &quot;ShopId&quot;: 1,
+        &quot;Price&quot;: 120,
+        &quot;Name&quot;: &quot;消耗&quot;,
+        &quot;EnableTime&quot;: 0,
+        &quot;TotalNum&quot;: 10,
+        &quot;OutNum&quot;: 4,
+        &quot;Memo&quot;: &quot;好好干 挣钱过年\n&quot;,
+        &quot;LimitPurchaseQuantity&quot;: 1
+      }
+    ]
+  }
+}</pre><p></p><h2><a name='header-c19' class='md-header-anchor '></a>购买商品</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
   &quot;SID&quot;: &quot;fb35b6bfb87dd381c2d65096c5ea7691&quot;,
   &quot;CID&quot;: 91111,
   &quot;PL&quot;: {
@@ -465,7 +516,7 @@ footer { color: inherit; }
     &quot;Quantity&quot;: 1,
     &quot;Memo&quot;: &quot;接了一单&quot;
   }
-}</pre><h2><a name='header-c49' class='md-header-anchor '></a>提交审核订单</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
+}</pre><h2><a name='header-c21' class='md-header-anchor '></a>提交审核订单</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
   &quot;SID&quot;: &quot;40757c560f2506beb30be23401917555&quot;,
   &quot;CID&quot;: 91121,
   &quot;PL&quot;: {
@@ -477,7 +528,7 @@ footer { color: inherit; }
 {
   &quot;CID&quot;: 91122,
   &quot;RC&quot;: 0
-}</pre><h2><a name='header-c53' class='md-header-anchor '></a>获取订单信息</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
+}</pre><h2><a name='header-c23' class='md-header-anchor '></a>获取订单信息</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
   &quot;SID&quot;: &quot;40757c560f2506beb30be23401917555&quot;,
   &quot;CID&quot;: 91121,
   &quot;PL&quot;: {
@@ -507,7 +558,7 @@ footer { color: inherit; }
     &quot;Quantity&quot;: 1,
     &quot;Memo&quot;: &quot;接了一单&quot;
   }
-}</pre><h2><a name='header-c57' class='md-header-anchor '></a>获取订单列表</h2><blockquote><p>0: 正在完成的订单 1:正在审核的订单 2:已成功的订单 3:审核失败订单</p></blockquote><pre class='md-fences mock-cm' style='display:block;position:relative'>{  
+}</pre><h2><a name='header-c25' class='md-header-anchor '></a>获取订单列表</h2><blockquote><p>0: 正在完成的订单 1:正在审核的订单 2:已成功的订单 3:审核失败订单</p></blockquote><pre class='md-fences mock-cm' style='display:block;position:relative'>{  
 	&quot;SID&quot;: &quot;40757c560f2506beb30be23401917555&quot;,
   &quot;CID&quot;: 91151,
   &quot;PL&quot;: {
@@ -580,7 +631,7 @@ footer { color: inherit; }
       }
     ]
   }
-}</pre><h2><a name='header-c61' class='md-header-anchor '></a>删除订单</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
+}</pre><h2><a name='header-c29' class='md-header-anchor '></a>删除订单</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
   &quot;SID&quot;: &quot;40757c560f2506beb30be23401917555&quot;,
   &quot;CID&quot;: 91131,
   &quot;PL&quot;: {
@@ -591,7 +642,7 @@ footer { color: inherit; }
 {
   &quot;CID&quot;: 91132,
   &quot;RC&quot;: 0
-}</pre><h2><a name='header-c67' class='md-header-anchor '></a>获取淘宝账号列表</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
+}</pre><h2><a name='header-c31' class='md-header-anchor '></a>获取淘宝账号列表</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
   &quot;SID&quot;: &quot;40757c560f2506beb30be23401917555&quot;,
   &quot;CID&quot;: 91201
 }
@@ -625,7 +676,7 @@ footer { color: inherit; }
       &quot;Memo&quot;: &quot;wode taobao&quot;
     }
   ]
-}</pre><h2><a name='header-c71' class='md-header-anchor '></a>更新淘宝账号</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{  
+}</pre><h2><a name='header-c33' class='md-header-anchor '></a>更新淘宝账号</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{  
   &quot;SID&quot;: &quot;40757c560f2506beb30be23401917555&quot;,
   &quot;CID&quot;: 91211,
   &quot;PL&quot;: {
@@ -637,7 +688,7 @@ footer { color: inherit; }
 {
   &quot;CID&quot;: 91212,
   &quot;RC&quot;: 0
-}</pre><h2><a name='header-c75' class='md-header-anchor '></a>删除淘宝账号</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
+}</pre><h2><a name='header-c35' class='md-header-anchor '></a>删除淘宝账号</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
   &quot;SID&quot;: &quot;40757c560f2506beb30be23401917555&quot;,
   &quot;CID&quot;: 91221,
   &quot;PL&quot;: {
@@ -648,7 +699,7 @@ footer { color: inherit; }
 {
   &quot;CID&quot;: 91222,
   &quot;RC&quot;: 0
-}</pre><h2><a name='header-c79' class='md-header-anchor '></a>添加淘宝账号</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
+}</pre><h2><a name='header-c37' class='md-header-anchor '></a>添加淘宝账号</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
   &quot;SID&quot;: &quot;40757c560f2506beb30be23401917555&quot;,
   &quot;CID&quot;: 91231,
   &quot;PL&quot;: {
@@ -660,7 +711,7 @@ footer { color: inherit; }
 {
   &quot;CID&quot;: 91232,
   &quot;RC&quot;: 0
-}</pre><h2><a name='header-c83' class='md-header-anchor '></a>获取钱包历史列表</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
+}</pre><h2><a name='header-c39' class='md-header-anchor '></a>获取钱包历史列表</h2><pre class='md-fences mock-cm' style='display:block;position:relative'>{
   &quot;SID&quot;: &quot;8287168ee1440159d4ac6ac30439b0cd&quot;,
   &quot;CID&quot;: 91301,
   &quot;PL&quot;: {
@@ -686,6 +737,6 @@ footer { color: inherit; }
       }
     ]
   }
-}</pre><p></p></div>
+}</pre></div>
 <div style='display:none;'>undefined</div></body>
 </html>
