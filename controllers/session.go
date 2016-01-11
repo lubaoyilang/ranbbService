@@ -16,6 +16,11 @@ type captchaPl struct {
 	Mobile string
 }
 
+type changePswdPl struct {
+	OldPswd string
+	NewPswd string
+}
+
 /**
 
 {
@@ -260,4 +265,43 @@ func (this * RanBaobaoController)FindPasswd(req * RanBaoBaoRequest,rsp * RanBaoB
 
 	beego.Debug("重置密码成功 -->",newpswd)
 	return;
+}
+
+func (this * RanBaobaoController)ChangePswd(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse){
+	if !this.validitySession(req.SID) {
+		rsp.RC = RC_ERR_1012
+		return
+	}
+
+	pl := changePswdPl{}
+	err := util.ConvertToModel(&req.PL,&pl)
+	if err != nil {
+		beego.Error("conver err",err.Error())
+		rsp.RC = RC_ERR_1001
+		return
+	}
+
+	uid := session.GetSessionByiD(req.SID)
+	user := &models.User{UID:uid}
+	err = models.GetUser(user)
+	if err != nil {
+		rsp.RC = RC_ERR_1010
+		return
+	}
+
+	if !strings.EqualFold(user.PassWord,util.StringMd5(pl.OldPswd)) {
+		rsp.RC = RC_ERR_1011
+		return
+	}
+
+	user.PassWord = util.StringMd5(pl.NewPswd)
+	err = models.SetUserPasswd(&user)
+	if err != nil {
+		beego.Error("设置密码错误")
+		rsp.RC = RC_ERR_1032
+		return
+	}
+	//删除session
+	session.DeleteBySid(req.SID);
+	return
 }

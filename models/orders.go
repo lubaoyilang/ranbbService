@@ -34,13 +34,13 @@ type Orders struct {
 	ShopName string `xorm:"shopName varchar(32)"`
 	Price int64 `xorm:"price"`
 	RequireLevel int `xorm:"requireLevel tinyint(2) "`
-	ShopRequire string `xorm:"shopRequire blob"`
-	ImageUrl string `xorm:"imageUrl blob"`
+	ShopRequire string `xorm:"shopRequire TEXT"`
+	ImageUrl string `xorm:"imageUrl TEXT"`
 	BrokerAge int64 `xorm:"brokerAge"`
 	CreateTime int64 `xorm:"createTime default 0"`
 	UpdateTime int64 `xorm:"updateTime default 0"`
 	Quantity int `xorm:"quantity"`
-	Memo string `xorm:"memo blob"`
+	Memo string `xorm:"memo TEXT"`
 }
 
 

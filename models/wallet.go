@@ -16,7 +16,7 @@ type WalletLog struct {
 	Amount int64 `xorm:"price"`
 	Categroy int `xorm:"'categroy' TINYINT(1)`
 	CreateTime int64 `xorm:"createTime default 0"`
-	Memo string `xorm:"memo blob"`
+	Memo string `xorm:"memo TEXT"`
 }
 
 func GetWalletLogByMode(UID string ,page,size,mode int) ([]WalletLog,int,error){

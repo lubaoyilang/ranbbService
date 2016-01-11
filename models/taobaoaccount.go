@@ -15,7 +15,7 @@ type TaobaoAccount struct {
 	TaoBaoAccount string  `xorm:"'taobaoAccount' index notnull unique varchar(35)"`
 	CreateTime int64 `xorm:"createTime default 0"`
 	UpdateTime int64 `xorm:"updateTime default 0"`
-	Memo string  `xorm:"memo blob"`
+	Memo string  `xorm:"memo TEXT"`
 }
 
 

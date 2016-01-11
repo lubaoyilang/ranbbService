@@ -88,6 +88,8 @@ func (this * RanBaobaoController) GetGoodsList(req * RanBaoBaoRequest,rsp * RanB
 	rsp.PL = json
 }
 
+
+
 func (this * RanBaobaoController) AcceptTask(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse){
 	if !this.validitySession(req.SID) {
 		rsp.RC = RC_ERR_1012

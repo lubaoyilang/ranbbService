@@ -19,5 +19,5 @@ type Shop struct {
 	ShopTaoBaoId string `xorm:"'shopTaoBaoId' index notnull unique varchar(35)"`
 	CreateTime int64 `xorm:"'createTime' BigInt(10) default 0"`
 	UpdateTime int64 `xorm:"'updateTime' BigInt(10) default 0"`
-	Memo string `xorm:"memo blob"`
+	Memo string `xorm:"memo TEXT"`
 }

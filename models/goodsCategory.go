@@ -12,7 +12,7 @@ type GoodsCategroy struct {
 	EnableTime int64 `xorm:"'enbaleTime' BigInt(10) default 0"`
 	TotalNum int `xorm:"'totalNum'  int(11)"`
 	OutNum int `xorm:"'outNum'  int(11)"`
-	Memo string `xorm:"memo blob"`
+	Memo string `xorm:"memo TEXT"`
 	LimitPurchaseQuantity int `xorm:"limitPurchaseQuantity default 1"`
 }
 
@@ -44,7 +44,7 @@ func AddCateGroyOutCount(categroy *GoodsCategroy) error {
 	sess := Engine.NewSession()
 	defer sess.Close()
 	sess.Begin()
-	_,err := sess.Query(`update goods_categroy set outNum=? where id=?`,categroy.OutNum+1,categroy.CategroyId)
+	_,err := sess.Exec(`update goods_categroy set outNum=? where id=?`,categroy.OutNum+1,categroy.CategroyId)
 	if err != nil {
 		beego.Error(err)
 		sess.Rollback()

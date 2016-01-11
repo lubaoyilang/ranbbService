@@ -161,6 +161,56 @@
 }
 ```
 
+
+
+## 获取商品分类列表
+
+``` 
+{
+  "SID": "29ee4eed583aafc07e8d0143a90bef48",
+  "CID": 91161,
+  "PL": {
+    "GoodsId": 1
+  }
+}
+
+{
+  "CID": 91162,
+  "RC": 0,
+  "PL": {
+    "Count": 2,
+    "Data": [
+      {
+        "CategroyId": 1,
+        "GoodsId": 1,
+        "ShopId": 1,
+        "Price": 100,
+        "Name": "大号",
+        "EnableTime": 0,
+        "TotalNum": 10,
+        "OutNum": 5,
+        "Memo": "我了个去你好好刷",
+        "LimitPurchaseQuantity": 1
+      },
+      {
+        "CategroyId": 2,
+        "GoodsId": 1,
+        "ShopId": 1,
+        "Price": 120,
+        "Name": "消耗",
+        "EnableTime": 0,
+        "TotalNum": 10,
+        "OutNum": 4,
+        "Memo": "好好干 挣钱过年\n",
+        "LimitPurchaseQuantity": 1
+      }
+    ]
+  }
+}
+```
+
+
+
 ## 购买商品
 
 ``` 
@@ -253,7 +303,7 @@
 
 ## 获取订单列表
 
-> 0: 正在完成的订单 1:正在审核的订单 2:已成功的订单 3:审核失败订单
+>  0: 正在完成的订单 1:正在审核的订单 2:已成功的订单 3:审核失败订单
 
 ``` 
 {  
@@ -473,4 +523,3 @@
   }
 }
 ```
-

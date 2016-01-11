@@ -24,12 +24,12 @@ type Goods struct {
 	ShopName string `xorm:"shopName varcha(32)"`
 	State int `xorm:"'state' tinyint(1)  default 1"` //0 : 下架 1:正常
 	RequireLevel int `xorm:"requireLevel tinyint(2) "`
-	ShopRequire string `xorm:"shopRequire blob"`
-	ImageUrl string `xorm:"imageUrl blob"`
+	ShopRequire string `xorm:"shopRequire TEXT"`
+	ImageUrl string `xorm:"imageUrl TEXT"`
 	BrokerAge int64 `xorm:"brokerAge"`
 	CreateTime int64 `xorm:"createTime default 0"`
 	UpdateTime int64 `xorm:"updateTime default 0"`
-	Memo string `xorm:"memo blob"`
+	Memo string `xorm:"memo TEXT"`
 }
 
 func GetGoodsOfShopByPage(page,size ,shopId int ) ( *[]Goods ,int, error) {
