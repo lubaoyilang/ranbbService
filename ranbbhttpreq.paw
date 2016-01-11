@@ -448,7 +448,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">["{\\n  \\"SID\\": \\"3e311edab14ba669303f7a1061037224\\",\\n  \\"CID\\": 91031\\n}"]</attribute>
+        <attribute name="body" type="string">["{\\n  \\"SID\\": \\"ace4e357a7499bf0ead646ab3f78ec75\\",\\n  \\"CID\\": 91031\\n}"]</attribute>
         <attribute name="order" type="int64">3</attribute>
         <attribute name="name" type="string">登出</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z128"></relationship>
@@ -536,7 +536,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">["{\\n  \\"SID\\": \\"29ee4eed583aafc07e8d0143a90bef48\\",\\n  \\"CID\\": 91101,\\n  \\"PL\\": {\\n    \\"Page\\": 1,\\n    \\"Size\\": 2\\n  }\\n}"]</attribute>
+        <attribute name="body" type="string">["{\\n  \\"SID\\": \\"1ba15dea758edada1ab4523189827c03\\",\\n  \\"CID\\": 91101,\\n  \\"PL\\": {\\n    \\"Page\\": 1,\\n    \\"Size\\": 2\\n  }\\n}"]</attribute>
         <attribute name="order" type="int64">6</attribute>
         <attribute name="name" type="string">获取商品列表</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z128"></relationship>
@@ -613,7 +613,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">["{  \\"SID\\": \\"0d034b86508356706d6f9e020e7180fe\\",\\n  \\"CID\\": 91061,\\n  \\"PL\\": {\\n    \\"OldPswd\\": \\"123456\\",\\n\\t\\"NewPswd\\":\\"123456\\"\\n  }\\n}"]</attribute>
+        <attribute name="body" type="string">["{  \\"SID\\": \\"afda3442dde96baf50224195b5ac6a84\\",\\n  \\"CID\\": 91061,\\n  \\"PL\\": {\\n    \\"OldPswd\\": \\"123456\\",\\n\\t\\"NewPswd\\":\\"12345678\\"\\n  }\\n}"]</attribute>
         <attribute name="order" type="int64">4</attribute>
         <attribute name="name" type="string">修改密码</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z128"></relationship>

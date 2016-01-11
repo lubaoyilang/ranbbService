@@ -84,7 +84,7 @@ func (this * RanBaobaoController) GetGoodsList(req * RanBaoBaoRequest,rsp * RanB
 
 	json := simplejson.New()
 	json.Set("Count",count)
-	json.Set("data",goods)
+	json.Set("Data",goods)
 	rsp.PL = json
 }
 
