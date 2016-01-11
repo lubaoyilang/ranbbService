@@ -12,9 +12,9 @@ Memo	String	发生事件描述
 
 type WalletLog struct {
 	Wid int `xorm:"wid pk int(11) unique autoincr "`
-	UID string  `xorm:"'UID' index notnull varchar(35)"`
+	UID string  `xorm:"'UID' index notnull VARCHAR(35)"`
 	Amount int64 `xorm:"price"`
-	Categroy int `xorm:"'categroy' tinyint(1)`
+	Categroy int `xorm:"'categroy' TINYINT(1)`
 	CreateTime int64 `xorm:"createTime default 0"`
 	Memo string `xorm:"memo blob"`
 }

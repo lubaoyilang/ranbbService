@@ -25,11 +25,13 @@ Memo	String	描述
 type Orders struct {
 	OrderId int `xorm:"orderId pk int(11) unique autoincr "`
 	GoodsId int `xorm:"goodId index int(11) notnull"`
+	CategroyId int `xorm:"'categroyId' int(11)"`
+	CategroyName string `xorm:"'categroyName' varchar(32)"`
 	ShopId int	`xorm:"shopId index int(11) notnull"`
 	UID string  `xorm:"'UID' index notnull varchar(35)"`
 	TaoBaoAccount string `xorm:"'taobaoAccount' index varchar(35)"`
 	State int `xorm:"'state' tinyint(1)  default 0"`
-	ShopName string `xorm:"shopName varcha(32)"`
+	ShopName string `xorm:"shopName varchar(32)"`
 	Price int64 `xorm:"price"`
 	RequireLevel int `xorm:"requireLevel tinyint(2) "`
 	ShopRequire string `xorm:"shopRequire blob"`
@@ -53,7 +55,8 @@ func GetOrderById(orderId int,UID string) (* Orders,error){
 	return order,nil
 }
 
-func AddOrderAndSubGoods(order * Orders,goods *Goods) error {
+func AddOrderAndSubCateGroyOutNum(order * Orders,categroy *GoodsCategroy) error {
+
 	sess := Engine.NewSession()
 	defer sess.Close()
 	sess.Begin()
@@ -63,8 +66,8 @@ func AddOrderAndSubGoods(order * Orders,goods *Goods) error {
 		sess.Rollback()
 		return err
 	}
-	_,err =sess.Exec(`update goods set quantity = ? where goodId = ?`,goods.Quantity-1,goods.GoodsId)
-
+//	_,err =sess.Exec(`update goods set quantity = ? where goodId = ?`,goods.Quantity-1,goods.GoodsId)
+	err = AddCateGroyOutCount(categroy)
 	if err != nil {
 		beego.Error(err.Error())
 		sess.Rollback()
@@ -77,7 +80,7 @@ func SetOrderState(state,orderId int,taoBaoAccount string) error {
 	sess := Engine.NewSession()
 	defer sess.Close()
 	sess.Begin()
-	_,err :=sess.Exec(`update orders set state = ? ,taoBaoAccount = ?where orderId = ?`,state,taoBaoAccount,orderId)
+	_,err :=sess.Exec(`update orders set state = ? ,taoBaoAccount = ? where orderId = ?`,state,taoBaoAccount,orderId)
 	if err != nil {
 		sess.Rollback()
 		return err

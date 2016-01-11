@@ -23,15 +23,12 @@ type Goods struct {
 	ShopId int `xorm:"shopId index int(11) notnull"`
 	ShopName string `xorm:"shopName varcha(32)"`
 	State int `xorm:"'state' tinyint(1)  default 1"` //0 : 下架 1:正常
-	Price int64 `xorm:"price "`
 	RequireLevel int `xorm:"requireLevel tinyint(2) "`
 	ShopRequire string `xorm:"shopRequire blob"`
 	ImageUrl string `xorm:"imageUrl blob"`
 	BrokerAge int64 `xorm:"brokerAge"`
 	CreateTime int64 `xorm:"createTime default 0"`
 	UpdateTime int64 `xorm:"updateTime default 0"`
-	Quantity int `xorm:"quantity"`
-	LimitPurchaseQuantity int `xorm:"limitPurchaseQuantity default 1"`
 	Memo string `xorm:"memo blob"`
 }
 
@@ -83,15 +80,15 @@ func AddGoods(goods * Goods) error {
 	return nil
 }
 
-func SubOneGoods(goods * Goods) error {
-	sess := Engine.NewSession()
-	defer sess.Close()
-	sess.Begin()
-	goods.Quantity -= 1
-	_,err := sess.Where("goodId = ?",goods.GoodsId).Update(goods)
-	if err != nil {
-		sess.Rollback()
-		return err
-	}
-	return nil
-}
+//func SubOneGoods(goods * Goods) error {
+//	sess := Engine.NewSession()
+//	defer sess.Close()
+//	sess.Begin()
+//	goods.Quantity -= 1
+//	_,err := sess.Where("goodId = ?",goods.GoodsId).Update(goods)
+//	if err != nil {
+//		sess.Rollback()
+//		return err
+//	}
+//	return nil
+//}

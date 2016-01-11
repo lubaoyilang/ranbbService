@@ -22,6 +22,7 @@ type goodsReq struct {
  */
 type AcceptReq struct {
 	GoodsId int
+	CategroyId int
 	Count int
 }
 
@@ -99,7 +100,13 @@ func (this * RanBaobaoController) AcceptTask(req * RanBaoBaoRequest,rsp * RanBao
 		return
 	}
 
-	goods,err := models.GetGoods(pl.GoodsId)
+	categroy,err := models.GetCateGroyById(pl.CategroyId)
+	if err != nil {
+		rsp.RC = RC_ERR_1015
+		return
+	}
+
+	goods,err := models.GetGoods(categroy.GoodsId)
 	if err != nil {
 		rsp.RC = RC_ERR_1015
 		return
@@ -109,12 +116,12 @@ func (this * RanBaobaoController) AcceptTask(req * RanBaoBaoRequest,rsp * RanBao
 		return
 	}
 
-	if goods.Quantity <= 0 {
+	if categroy.TotalNum <= categroy.OutNum {
 		rsp.RC = RC_ERR_1018
 		return
 	}
 
-	if pl.Count > goods.LimitPurchaseQuantity {
+	if pl.Count > categroy.LimitPurchaseQuantity {
 		rsp.RC = RC_ERR_1019
 		return
 	}
@@ -122,10 +129,12 @@ func (this * RanBaobaoController) AcceptTask(req * RanBaoBaoRequest,rsp * RanBao
 	order := models.Orders{
 		UID:session.GetSessionByiD(req.SID),
 		GoodsId:goods.GoodsId,
+		CategroyId:categroy.CategroyId,
+		CategroyName:categroy.Name,
 		ShopId:goods.ShopId,
 		State:0,
 		ShopName:goods.ShopName,
-		Price:goods.Price,
+		Price:categroy.Price,
 		RequireLevel:goods.RequireLevel,
 		ShopRequire:goods.ShopRequire,
 		ImageUrl:goods.ImageUrl,
@@ -135,13 +144,36 @@ func (this * RanBaobaoController) AcceptTask(req * RanBaoBaoRequest,rsp * RanBao
 		Quantity:pl.Count,
 		Memo:"接了一单"}
 
-	err = models.AddOrderAndSubGoods(&order,goods)
+	err = models.AddOrderAndSubCateGroyOutNum(&order,categroy)
 	if err != nil {
 		rsp.RC = RC_ERR_1017
 		return
 	}
 
 	rsp.PL = order
+}
+
+
+func  (this * RanBaobaoController)GetGoodsCateGroy(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse) {
+	if !this.validitySession(req.SID) {
+		rsp.RC = RC_ERR_1012
+		return
+	}
+	var pl AcceptReq
+	err := util.ConvertToModel(&req.PL,&pl)
+	if err != nil {
+		rsp.RC = RC_ERR_1001
+		return
+	}
+
+	categroy,count,err := models.GetCateGroyByGoodsId(pl.GoodsId)
+	js := simplejson.New()
+	js.Set("Count",count)
+	js.Set("Data",categroy)
+	if err != nil {
+		beego.Error(err)
+	}
+	rsp.PL = js
 }
 
 func (this * RanBaobaoController) CommitOrder(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse){

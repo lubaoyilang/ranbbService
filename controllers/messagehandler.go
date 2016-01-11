@@ -63,6 +63,8 @@ func (this * RanBaobaoController)Handler() {
 		this.GetGoodsList(&req,&rsp)
 	case CID_ACCEPT_GOODS_REQ:
 		this.AcceptTask(&req,&rsp)
+	case CID_GET_GOODSCATEGROY_REQ:
+		this.GetGoodsCateGroy(&req,&rsp)
 	case CID_COMMIT_ORDER_REQ:
 		this.CommitOrder(&req,&rsp)
 	case CID_DELETE_ORDER_REQ:

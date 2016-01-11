@@ -44,7 +44,7 @@ func initSqlLog() {
 }
 
 func Sync2() {
-	err := Engine.Sync2(new(User),new(Shop),new(WalletLog),new(UserToken),new(Goods),new(Orders),new(TaobaoAccount),new(Admin),new(Session))
+	err := Engine.Sync2(new(User),new(Shop),new(WalletLog),new(UserToken),new(Goods),new(Orders),new(TaobaoAccount),new(Admin),new(Session),new(GoodsCategroy))
 	if err != nil {
 		beego.Info(err.Error())
 	}
