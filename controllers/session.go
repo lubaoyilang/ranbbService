@@ -295,10 +295,10 @@ func (this * RanBaobaoController)ChangePswd(req * RanBaoBaoRequest,rsp * RanBaoB
 	}
 
 	user.PassWord = util.StringMd5(pl.NewPswd)
-	err = models.SetUserPasswd(&user)
+	err = models.SetUserPasswd(user)
 	if err != nil {
 		beego.Error("设置密码错误")
-		rsp.RC = RC_ERR_1032
+		rsp.RC = RC_ERR_1033
 		return
 	}
 	//删除session
