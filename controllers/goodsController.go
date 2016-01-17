@@ -132,6 +132,7 @@ func (this * RanBaobaoController) AcceptTask(req * RanBaoBaoRequest,rsp * RanBao
 		UID:session.GetSessionByiD(req.SID),
 		GoodsId:goods.GoodsId,
 		CategroyId:categroy.CategroyId,
+		GoodsName:goods.GoodsName,
 		CategroyName:categroy.Name,
 		ShopId:goods.ShopId,
 		State:0,

@@ -22,11 +22,13 @@ type Goods struct {
 	GoodsId int `xorm:"'goodId' pk int(11) unique autoincr "`
 	ShopId int `xorm:"shopId index int(11) notnull"`
 	ShopName string `xorm:"shopName varcha(32)"`
+	GoodsName string `xorm:"goodsName varcha(32)"`
 	State int `xorm:"'state' tinyint(1)  default 1"` //0 : 下架 1:正常
 	RequireLevel int `xorm:"requireLevel tinyint(2) "`
 	ShopRequire string `xorm:"shopRequire TEXT"`
 	ImageUrl string `xorm:"imageUrl TEXT"`
 	BrokerAge int64 `xorm:"brokerAge"`
+	SettingPrice int64 `xorm:"settingPrice"`
 	CreateTime int64 `xorm:"createTime default 0"`
 	UpdateTime int64 `xorm:"updateTime default 0"`
 	Memo string `xorm:"memo TEXT"`

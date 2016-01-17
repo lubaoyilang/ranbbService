@@ -26,6 +26,7 @@ type Orders struct {
 	OrderId int `xorm:"orderId pk int(11) unique autoincr "`
 	GoodsId int `xorm:"goodId index int(11) notnull"`
 	CategroyId int `xorm:"'categroyId' int(11)"`
+	GoodsName string `xorm:"goodsName varchar(32)"`
 	CategroyName string `xorm:"'categroyName' varchar(32)"`
 	ShopId int	`xorm:"shopId index int(11) notnull"`
 	UID string  `xorm:"'UID' index notnull varchar(35)"`

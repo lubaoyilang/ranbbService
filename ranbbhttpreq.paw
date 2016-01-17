@@ -69,7 +69,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">["{\\n  \\"SID\\": \\"34ccd6829dce3192db75f72dafce23d8\\",\\n  \\"CID\\": 91151,\\n  \\"PL\\": {\\n    \\"State\\": 1\\n  }\\n}"]</attribute>
+        <attribute name="body" type="string">["{\\n  \\"SID\\": \\"1ba15dea758edada1ab4523189827c03\\",\\n  \\"CID\\": 91151,\\n  \\"PL\\": {\\n    \\"State\\": 0\\n  }\\n}"]</attribute>
         <attribute name="order" type="int64">11</attribute>
         <attribute name="name" type="string">获取订单列表</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z128"></relationship>
