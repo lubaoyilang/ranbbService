@@ -14,7 +14,7 @@ var (
 
 func init() {
 	var err error
-	Engine,err = xorm.NewEngine("mysql","cloudbridge:Cbcnspsp06@tcp(115.29.164.59:3306)/storedb?charset=utf8")
+	Engine,err = xorm.NewEngine("mysql",beego.AppConfig.String("mydb"))
 	if err != nil {
 		beego.Info(err.Error())
 	}

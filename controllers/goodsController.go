@@ -216,6 +216,7 @@ func (this * RanBaobaoController) CommitOrder(req * RanBaoBaoRequest,rsp * RanBa
 	user := &models.User{UID:session.GetSessionByiD(req.SID)}
 	err = models.GetUser(user)
 	if err != nil {
+		beego.Error(err.Error())
 		models.SetOrderState(0,order.OrderId,pl.TaoBaoAccount)
 		rsp.RC = RC_ERR_1022
 		return
@@ -226,6 +227,7 @@ func (this * RanBaobaoController) CommitOrder(req * RanBaoBaoRequest,rsp * RanBa
 
 	err = models.UpdateUserVertifyAmount(user)
 	if err != nil {
+		beego.Error(err.Error())
 		models.SetOrderState(0,order.OrderId,pl.TaoBaoAccount)
 		rsp.RC = RC_ERR_1022
 		return

@@ -47,7 +47,8 @@ func AddWalletLog(log * WalletLog) error{
 	sess.Begin()
 	_,err := sess.InsertOne(log)
 	if err != nil {
-		return sess.Rollback()
+		 sess.Rollback()
+		return err
 	}
 	return sess.Commit()
 }

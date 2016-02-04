@@ -72,7 +72,7 @@ func (this *RanBaobaoController)OutToAlipayAcc(req *RanBaoBaoRequest, rsp *RanBa
 		rsp.RC = RC_ERR_1035
 		return
 	}
-	if strings.EqualFold(util.StringMd5(pl.PassWord),user.PassWord) {
+	if !strings.EqualFold(util.StringMd5(pl.PassWord),user.PassWord) {
 		rsp.RC = RC_ERR_1011
 		return
 	}
