@@ -61,6 +61,8 @@ func (this * RanBaobaoController)Handler() {
 		this.FindPasswd(&req,&rsp)
 	case CID_CHANGE_PASSWD_REQ:
 		this.ChangePswd(&req,&rsp)
+	case CID_UPDATE_USERINFO_REQ:
+		this.UpdateUserInfo(&req,&rsp);
 	case CID_GET_GOODS_REQ:
 		this.GetGoodsList(&req,&rsp)
 	case CID_ACCEPT_GOODS_REQ:
@@ -85,6 +87,8 @@ func (this * RanBaobaoController)Handler() {
 		this.AddTaobaoAcc(&req,&rsp)
 	case CID_GET_WALLET_LOGS_REQ:
 		this.GetWalletLogs(&req,&rsp)
+	case CID_OUT_MOUNY_TO_ALP_REQ:
+		this.OutToAlipayAcc(&req,&rsp)
 	default:
 		rsp.RC = RC_ERR_1000
 	}

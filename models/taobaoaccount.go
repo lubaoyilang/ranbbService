@@ -31,6 +31,14 @@ func UpdateTaobaoAcc(acc *TaobaoAccount) error {
 	sess := Engine.NewSession()
 	defer sess.Close()
 	sess.Begin()
+//	acctmp := &TaobaoAccount{Tid:acc.Tid}
+//	ok,err := sess.Get(acctmp)
+//	if err != nil || !ok{
+//		return errors.New("can not find acc")
+//	}
+//	acctmp.Memo = acc.Memo
+//	acctmp.TaoBaoAccount = acc.TaoBaoAccount
+//	acctmp.UpdateTime = acc.UpdateTime;
 	_,err := sess.Where("tid = ?",acc.Tid).Update(acc)
 	if err != nil {
 		sess.Rollback()

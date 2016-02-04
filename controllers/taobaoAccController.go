@@ -30,7 +30,7 @@ func (this * RanBaobaoController) GetTaobaoAccList(req * RanBaoBaoRequest,rsp * 
 	js.Set("Count",count)
 	js.Set("Data",accs)
 
-	rsp.PL = accs
+	rsp.PL = js
 }
 
 func (this * RanBaobaoController) UpdateTaobaoAcc(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse){
@@ -38,7 +38,6 @@ func (this * RanBaobaoController) UpdateTaobaoAcc(req * RanBaoBaoRequest,rsp * R
 		rsp.RC = RC_ERR_1012
 		return
 	}
-
 
 	var pl updateTaobaoAccReq
 	err := util.ConvertToModel(&req.PL,&pl)
@@ -53,7 +52,7 @@ func (this * RanBaobaoController) UpdateTaobaoAcc(req * RanBaoBaoRequest,rsp * R
 		return
 	}
 
-	acc := &models.TaobaoAccount{Tid:pl.Tid,TaoBaoAccount:pl.TaoBaoAccount,UpdateTime:time.Now().Unix()}
+	acc := &models.TaobaoAccount{Tid:pl.Tid,TaoBaoAccount:pl.TaoBaoAccount,UpdateTime:time.Now().Unix(),Memo:pl.Memo}
 	err = models.UpdateTaobaoAcc(acc)
 	if err != nil {
 		rsp.RC = RC_ERR_1027

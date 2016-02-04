@@ -47,6 +47,13 @@ type registerPl struct {
 	Captcha string
 }
 
+type updateUserInfoPl struct {
+	Mobile string
+	RealName string
+	IdCard string
+	AliPayAccount string
+}
+
 type loginPl struct  {
 	Mobile string
 	PassWord string
@@ -303,5 +310,59 @@ func (this * RanBaobaoController)ChangePswd(req * RanBaoBaoRequest,rsp * RanBaoB
 	}
 	//删除session
 	session.DeleteBySid(req.SID);
+	return
+}
+
+
+func (this * RanBaobaoController)UpdateUserInfo(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse) {
+	if !this.validitySession(req.SID) {
+		rsp.RC = RC_ERR_1012
+		return
+	}
+	pl := updateUserInfoPl{}
+	err := util.ConvertToModel(&req.PL,&pl)
+	if err != nil {
+		beego.Error("conver err",err.Error())
+		rsp.RC = RC_ERR_1001
+		return
+	}
+	uid := session.GetSessionByiD(req.SID)
+	user := &models.User{UID:uid}
+	err = models.GetUser(user)
+	if err != nil {
+		rsp.RC = RC_ERR_1010
+		return
+	}
+
+	if !util.ValidityIdCard(pl.RealName,pl.IdCard) {
+		beego.Error("错误的身份证:%s != %s",pl.RealName,pl.IdCard)
+		rsp.RC = RC_ERR_1005
+		return
+	}
+
+	user.Mobile = pl.Mobile;
+	user.RealName = pl.RealName;
+	user.IdCard = pl.IdCard;
+	user.AliPayAccount = pl.AliPayAccount;
+	err = models.UpdateUserInfo(user)
+	if err != nil {
+		errStr := err.Error()
+		if strings.Contains(errStr,"UQE_user_mobile") {
+			beego.Info("手机号重复注册")
+			rsp.RC = RC_ERR_1007 // = 1007 //手机号已经被注册
+		}else if strings.Contains(errStr,"UQE_user_idCard") {
+			beego.Info("身份证重复")
+			rsp.RC = RC_ERR_1008
+		}else if strings.Contains(errStr,"UQE_user_aliPayAccount"){
+			beego.Info("支付宝账号重复")
+			rsp.RC = RC_ERR_1010
+		}else{
+			beego.Error("更新用户信息失败")
+			rsp.RC = RC_ERR_1034
+		}
+
+		return
+	}
+
 	return
 }

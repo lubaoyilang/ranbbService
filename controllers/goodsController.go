@@ -211,8 +211,30 @@ func (this * RanBaobaoController) CommitOrder(req * RanBaoBaoRequest,rsp * RanBa
 		rsp.RC = RC_ERR_1022
 		return
 	}
-	return
 
+	//增加审核中金额
+	user := &models.User{UID:session.GetSessionByiD(req.SID)}
+	err = models.GetUser(user)
+	if err != nil {
+		models.SetOrderState(0,order.OrderId,pl.TaoBaoAccount)
+		rsp.RC = RC_ERR_1022
+		return
+	}
+
+	user.VerifyAmount += order.Price;
+	user.Total += order.Price;
+
+	err = models.UpdateUserVertifyAmount(user)
+	if err != nil {
+		models.SetOrderState(0,order.OrderId,pl.TaoBaoAccount)
+		rsp.RC = RC_ERR_1022
+		return
+	}
+
+	//增加记录
+	log := &models.WalletLog{UID:user.UID,Amount:order.Price,NowValue:user.Total,Categroy:4,CreateTime:time.Now().Unix(),Memo:"提交审核 正价审核中的金额"}
+	models.AddWalletLog(log)
+	return
 }
 
 func (this * RanBaobaoController) DeleteOrder(req * RanBaoBaoRequest,rsp * RanBaoBaoResponse){

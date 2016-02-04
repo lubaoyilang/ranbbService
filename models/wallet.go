@@ -16,17 +16,13 @@ type WalletLog struct {
 	Amount int64 `xorm:"price"`
 	Categroy int `xorm:"'categroy' TINYINT(1)`
 	CreateTime int64 `xorm:"createTime default 0"`
+	NowValue int64 `xorm:"nowValue"`
 	Memo string `xorm:"memo TEXT"`
 }
 
 func GetWalletLogByMode(UID string ,page,size,mode int) ([]WalletLog,int,error){
-	var w string
 	logs := make([]WalletLog,0)
-	if mode == 0 || mode == 4{
-		w = fmt.Sprintf("UID = %s",UID)
-	}else {
-		w = fmt.Sprintf("UID = '%s' and categroy = %d",UID,mode)
-	}
+	w := fmt.Sprintf("UID = '%s' and categroy = %d",UID,mode)
 
 	if page <= 0{
 		page = 0
@@ -41,6 +37,17 @@ func GetWalletLogByMode(UID string ,page,size,mode int) ([]WalletLog,int,error){
 	page = page*size
 	sess := Engine.NewSession()
 	defer sess.Close()
-	err := sess.Where(w).Limit(size,page).Find(&logs)
+	err := sess.Where(w).Limit(size,page).OrderBy("createTime desc").Find(&logs)
 	return logs,len(logs),err
+}
+
+func AddWalletLog(log * WalletLog) error{
+	sess := Engine.NewSession()
+	defer sess.Close()
+	sess.Begin()
+	_,err := sess.InsertOne(log)
+	if err != nil {
+		return sess.Rollback()
+	}
+	return sess.Commit()
 }
